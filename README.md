@@ -1,6 +1,10 @@
 # docker-case
 这个项目主要是为了快速拉起基于docker的服务，在使用中如果有问题可以提交[issuse](https://github.com/zhaoyunxing92/docker-case/issues) 有没有涉及到的欢迎添加进来，（本人的系统是deepin各位在使用中如果遇到系统问题也欢迎提交issuse）
 
+## 进展
+
+* [es+kibana](./elasticsearch/readme.md)
+
 ## docker-compose安装
 
 > [官网安装](https://docs.docker.com/compose/install/)  各种系统安装很详细了,下面是按照官网搬书
