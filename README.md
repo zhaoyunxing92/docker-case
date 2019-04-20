@@ -1,5 +1,5 @@
 # docker-case
-这个项目主要是为了快速拉起基于docker的服务，在使用中如果有问题可以提交`issuse` 有没有涉及到的欢迎添加进来
+这个项目主要是为了快速拉起基于docker的服务，在使用中如果有问题可以提交[issuse](https://github.com/zhaoyunxing92/docker-case/issues) 有没有涉及到的欢迎添加进来，（本人的系统是deepin各位在使用中如果遇到系统问题也欢迎提交issuse）
 
 ## docker-compose安装
 
@@ -68,3 +68,58 @@
   Removing elasticsearch ... done
   Removing network es_esnet
   ```
+## docker安装  
+
+docker 要求系统的内核版本高于 3.10 ，通过` uname -r` 命令查看你当前的内核版本
+
+* 移除残渣
+
+  ```shell
+  $ sudo apt-get remove docker docker-engine docker.io
+  ```
+
+* 下载
+
+  > [windows](https://docs.docker.com/v17.09/docker-for-windows/install/) 严格安装流程是可以成功的
+
+  ```shell
+  yum -y install docker-io
+  # 或者
+  sudo wget -qO- http://get.docker.com | sh
+  ```
+
+* 启动
+
+  ```shell
+  service docker start
+  # 开机自动启动
+  systemctl enable docker.service
+  ```
+
+* 加速
+
+  > docker 拉去images会十分缓慢可以修改 /etc/docker/daemon.json文件没有创建，可以换阿里的，下面使用的是网易的
+
+  ```json
+  {
+    "registry-mirrors": ["http://hub-mirror.c.163.com"]
+  }
+  ```
+
+  修改完成后重启
+
+  ```shell
+  sudo systemctl daemon-reload
+  sudo systemctl restart docker
+  ```
+
+* 用户授权
+
+  ```shell
+  sudo groupadd docker # 创建docker组 默认会创建
+  sudo usermod -aG docker $USER  # 当前用户添加到docker组
+  sudo service docker restart
+  # 普通用户执行还是提示权限不够，则修改/var/run/docker.sock权限 
+  sudo chmod a+rw /var/run/docker.sock
+  ```
+
