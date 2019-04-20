@@ -1,0 +1,10 @@
+version: '3'
+services:
+  # jenkins
+  jenkins:
+    image: jenkins/jenkins:latest
+    container_name: jenkins
+    privileged: true
+    ports:
+      - 8080:8080
+      - 50000:50000
