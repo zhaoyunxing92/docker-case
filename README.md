@@ -3,7 +3,8 @@
 
 ## 进展
 
-* [es+kibana](./elasticsearch/readme.md)
+* [es+kibana](./elasticsearch/readme.md) 由于es依赖kibana就在一起弄了
+
 
 ## docker-compose安装
 
