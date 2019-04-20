@@ -3,9 +3,10 @@
 
 ## 进展
 
-* [es+kibana](./elasticsearch/readme.md) 由于es依赖kibana就在一起弄了
-
-
+* [x] [es+kibana](./elasticsearch/readme.md) 由于es依赖kibana就在一起弄了
+* [x] [redis](./redis/readme.md)
+* [x] [mysql](./mysql/readme.md)
+* [x] [jenkins](./jenkins/readme.md)
 ## docker-compose安装
 
 > [官网安装](https://docs.docker.com/compose/install/)  各种系统安装很详细了,下面是按照官网搬书
