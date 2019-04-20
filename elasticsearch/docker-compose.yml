@@ -11,8 +11,8 @@ services:
       - 9300:9300
     environment:
       cluster.name: elasticsearch  # es 名称
-    networks:
-      - esnet
+    # networks:
+    #   - esnet
 #     volumes:
 #       - ./config:/usr/share/elasticsearch/config
   # kibana
