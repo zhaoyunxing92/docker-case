@@ -7,19 +7,21 @@ version: '3'
 services:
   # redis
   redis:
-    image: redis:4.0.8
-    container_name: redis # docker启动后的名称
+    image: redis:5.0.4
+    container_name: redis
+    privileged: true  # deppin 系统授权一直不成功后续研究
     ports:
-      - 9200:9200
-      - 9300:9300
-    environment:
-      cluster.name: elasticsearch  # es 名称
+      - 6379:6379
+    volumes:
+      - /data/redis/data:/data
+      - ./redis.conf:/etc/redis/redis.conf # 把当前的redis.conf挂载到容器中
+    command: redis-server /etc/redis/redis.conf
 ````
 
 ## 命令
 
-* elasticsearch
- > --restart=always 可以根据个人所需添加
+* redis
+ > --restart=always 可以根据个人所需添加,redis.conf路径注意下
 ```shell
- docker run -d --name elk -p 9200:9200 -p 9300:9300 --restart=always elasticsearch:6.5.4
+ docker run -d --name redis -p 6379:6379 --privileged=true -v /data/redis/data:/data -v redis.conf:/etc/redis/redis.conf redis:5.0.4 redis-server /etc/redis/redis.conf
 ```
