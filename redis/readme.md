@@ -1,5 +1,5 @@
 # redis
-
+> redis.conf路径注意下
 ## yml文件
 
 ``` yaml
@@ -21,7 +21,7 @@ services:
 ## 命令
 
 * redis
- > --restart=always 可以根据个人所需添加,redis.conf路径注意下
+ > --restart=always 可以根据个人所需添加
 ```shell
  docker run -d --name redis -p 6379:6379 --privileged=true -v /data/redis/data:/data -v redis.conf:/etc/redis/redis.conf redis:5.0.4 redis-server /etc/redis/redis.conf
 ```
