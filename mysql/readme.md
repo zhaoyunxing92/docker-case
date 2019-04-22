@@ -1,5 +1,7 @@
 # mysql
 
+>更多变量请参考[mysql](https://docs.docker.com/samples/library/mysql/)
+
 ## yml文件
 
 ``` yaml
@@ -10,12 +12,11 @@ services:
     image: mysql:5.7
     container_name: mysql
     privileged: true  # 授权
+    command: --default-authentication-plugin=mysql_native_password # 指定使用插件
     ports:
       - 3308:3306
     environment:
       MYSQL_ROOT_PASSWORD: '147' # root用户密码
-      MYSQL_USER: 'sunny' #创建用户
-      MYSQL_PWD: '123456' # 密码
     volumes:
       - /data/mysql/data:/var/lib/mysql
       - ./mysql.cnf:/etc/my.cnf # 把当前的mysql.conf挂载到容器中
