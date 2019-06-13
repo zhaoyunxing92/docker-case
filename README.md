@@ -7,6 +7,7 @@
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
 * [x] [jenkins](./jenkins/readme.md)
+* [x] [nexus](./nexus/readme.md)
 ## docker-compose安装
 
 > [官网安装](https://docs.docker.com/compose/install/)  各种系统安装很详细了,下面是按照官网搬书
