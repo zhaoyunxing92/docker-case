@@ -103,6 +103,24 @@ docker 要求系统的内核版本高于 3.10 ，通过` uname -r` 命令查看�
   systemctl enable docker.service
   ```
 
+* 查看日志
+  
+  ```shell
+  docker logs -f xxx # 容器名称
+  ```
+* 进入容器
+  
+  ```shell
+  docker exec -it xxx /bin/bash # xxx 替换为容器名称
+  ```
+* 删除容器
+  
+   ```shell
+  docker rm xxx # xxx 替换为容器名称
+    # 如果容器在启动但是需要删除
+  docker rm -f xxx
+   ```
+
 * 加速
 
   > docker 拉去images会十分缓慢可以修改 /etc/docker/daemon.json文件没有创建，可以换阿里的，下面使用的是网易的
