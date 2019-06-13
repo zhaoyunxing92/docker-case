@@ -18,7 +18,6 @@ services:
 
 ## 命令
 
-* nexus
  > --restart=always 可以根据个人所需添加
 ```shell
  docker run --name nexus -d -p 8081:8081 sonatype/nexus3:latest

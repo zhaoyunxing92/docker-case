@@ -6,8 +6,8 @@
 * [x] [es+kibana](./elasticsearch/readme.md) 由于es依赖kibana就在一起弄了
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
-* [x] [jenkins](./jenkins/readme.md)
-* [x] [nexus](./nexus/readme.md)
+* [x] [jenkins](./jenkins/readme.md) 自动发布代码
+* [x] [nexus](./nexus/readme.md)  maven、node、docker等镜像私服
 ## docker-compose安装
 
 > [官网安装](https://docs.docker.com/compose/install/)  各种系统安装很详细了,下面是按照官网搬书
