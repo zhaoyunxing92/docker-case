@@ -1,0 +1,11 @@
+version: '3'
+services:
+  # kibana
+  kibana:
+    image: kibana:6.5.4
+    container_name: kibana # docker名称
+    environment:
+      elasticsearch.url: http://127.0.0.1:9200 # es地址
+      server.name: kibana
+    ports:
+      - 5601:5601

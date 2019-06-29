@@ -1,9 +1,10 @@
-# elasticsearch
+# kibana
+
 
 ## yml文件
 
 ``` yaml
-# es+kibana 配置
+# # es+kibana 配置
 version: '3'
 services:
   # elasticsearch

@@ -3,7 +3,8 @@
 
 ## 进展
 
-* [x] [es+kibana](./elasticsearch/readme.md) 由于es依赖kibana就在一起弄了
+* [x] [elasticsearch](./elasticsearch/readme.md)
+* [x] [kibana](./kibana/readme.md)
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
 * [x] [jenkins](./jenkins/readme.md) 自动发布代码
