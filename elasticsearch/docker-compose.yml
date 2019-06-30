@@ -11,23 +11,6 @@ services:
       - 9300:9300
     environment:
       cluster.name: elasticsearch  # es 名称
-    # networks:
-    #   - esnet
 #     volumes:
 #       - ./config:/usr/share/elasticsearch/config
-  # kibana
-  kibana:
-    image: kibana:6.5.4
-    container_name: kibana # docker名称
-    environment:
-      elasticsearch.url: http://127.0.0.1:9200
-      server.name: kibana
-    # networks:
-    #   - esnet
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch # 依赖es
-# networks:
-#   esnet:
 

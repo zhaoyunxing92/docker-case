@@ -44,3 +44,15 @@ services:
 docker run -d --name kb -e ELASTICSEARCH_URL=http://172.17.0.2:9200 -p 5601:5601 kibana:6.5.4
 ```
 > 起动好了给它一点时间因为:biking_woman:立刻去访问它会说`Kibana server is not ready yet`
+
+## 遇到的问题
+
+ * 挂载容器内部目录到物理机上出现 `[0.001s][error][logging] Error opening log file 'logs/gc.log': Permission denied`
+ 
+   权限问题
+   ```shell
+   # 给目录775权限
+   sudo chmod -R 775 /data/es/
+   # 修改文件归属者
+   chown R 1000:1000 /data/es/
+   ```

@@ -1,0 +1,17 @@
+cluster.name: elastic
+node.name: node-data-3
+node.master: false
+node.data: true
+http.port: 9203
+transport.tcp.port: 9303
+#network.bind_host: 0.0.0.0
+network.host: 0.0.0.0
+network.publish_host: 172.28.0.3
+# 设置集群自动发现服务id集合
+discovery.zen.ping.unicast.hosts: ["172.28.0.4:9301","172.17.0.2:9302","172.17.0.3:9303"]
+discovery.zen.minimum_master_nodes: 1
+http.cors.enabled: true
+http.cors.allow-origin: "*" 
+
+# 关闭密码认证
+xpack.security.enabled: false

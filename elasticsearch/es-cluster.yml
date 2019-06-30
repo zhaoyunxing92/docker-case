@@ -1,0 +1,39 @@
+# 集群配置
+version: '3'
+services:
+  es1:
+    image: elasticsearch:6.5.4
+    container_name: es1 # docker启动后的名称
+    volumes:
+      - /data/es/es1/data:/usr/share/elasticsearch/data
+      - /data/es/es1/logs:/usr/share/elasticsearch/logs
+      - ./config/es1/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      esnetwork:
+        ipv4_address: 172.28.0.4 # 172.28.0.1 这个ip一般不要用
+  es2:
+    image: elasticsearch:6.5.4
+    container_name: es2 # docker启动后的名称
+    volumes:
+      - /data/es/es2/data:/usr/share/elasticsearch/data
+      - /data/es/es2/logs:/usr/share/elasticsearch/logs
+      - ./config/es2/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      esnetwork:
+        ipv4_address: 172.28.0.2 
+  es3:
+    image: elasticsearch:6.5.4
+    container_name: es3 # docker启动后的名称
+    volumes:
+      - /data/es/es3/data:/usr/share/elasticsearch/data
+      - /data/es/es3/logs:/usr/share/elasticsearch/logs
+      - ./config/es3/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      esnetwork:
+        ipv4_address: 172.28.0.3
+# 配置网络
+networks:
+   esnetwork:
+      ipam:
+         config:
+         - subnet: 172.28.0.0/16
