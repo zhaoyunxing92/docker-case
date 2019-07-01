@@ -44,3 +44,10 @@ xpack.security.enabled: true
 ```shell
 docker-compose -f es-cluster.yml restart
 ```
+### 修改密码
+
+> postman这需要设置`Authorization`选择`Basic Auth` 并且填写用户名密码
+
+```shell
+curl -XPUT --user elastic:容器设置的密码 'http://127.0.0.1:9201/_xpack/security/user/elastic/_password'  -H "Content-Type:application/json" -d '{ "password" : "111111" }'
+```
