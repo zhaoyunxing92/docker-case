@@ -1,3 +1,4 @@
+# 单个服务
 version: '3'
 services:
   # elasticsearch
