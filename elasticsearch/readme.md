@@ -133,6 +133,16 @@ xpack.security.enabled: true
 # -f 指定yml文件运行
 docker-compose -f es-cluster.yml up -d
 ```
+### 验证
+
+```shell
+# --user elastic:123456 是我设置的密码
+➜  notes git:(master) ✗ curl --user elastic:123456 'http://127.0.0.1:9201/_cat/nodes'
+172.26.104.209 43 81 5 0.17 0.59 0.53 di  - node-data-3
+172.26.104.209 30 81 5 0.17 0.59 0.53 mdi * node-data-1
+172.26.104.209 55 81 5 0.17 0.59 0.53 di  - node-data-2
+```
+
 到这里集群版的也算是完成了
 
 ## 可能遇到的问题
