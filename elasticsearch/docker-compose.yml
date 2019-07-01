@@ -11,7 +11,8 @@ services:
       - 9200:9200
       - 9300:9300
     environment:
-      cluster.name: elasticsearch  # es 名称
+       cluster.name: "elasticsearch"  # es 名称
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
 #     volumes:
 #       - ./config:/usr/share/elasticsearch/config
 
