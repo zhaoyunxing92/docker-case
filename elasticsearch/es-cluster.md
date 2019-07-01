@@ -74,3 +74,9 @@ discovery.zen.minimum_master_nodes: 1
 # -f 指定yml文件运行
 docker-compose -f es-cluster.yml up -d
 ```
+
+### 注意点
+ 
+ * 如果是一台机器做集群那么需要设置`networks`
+
+ * 挂载的目录需要有权限`sudo chown R 1000:1000 /data/es/`
