@@ -1,6 +1,4 @@
-# elasticsearch
-
-## 集群搭建
+ ## elasticsearch 集群搭建
 
 ### yml
 ```yml

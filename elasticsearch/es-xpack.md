@@ -1,6 +1,4 @@
-# elasticsearch
-
-## 开启xpack安全认证
+## elasticsearch开启xpack安全认证
 
 ### 启动服务
 
