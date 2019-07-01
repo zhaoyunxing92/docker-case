@@ -4,6 +4,10 @@
 ## 进展
 
 * [x] [elasticsearch](./elasticsearch/readme.md)
+
+  - [x] [xpack](./elasticsearch/es-xpack.md) xpack安全认证
+  - [x] [es-cluster](./elasticsearch/es-cluster.md) es集群配置
+
 * [x] [kibana](./kibana/readme.md)
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)

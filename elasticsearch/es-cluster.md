@@ -1,43 +1,5 @@
 # elasticsearch
 
-## yml文件
-
-``` yaml
-# es+kibana 配置
-version: '3'
-services:
-  # elasticsearch
-  elasticsearch:
-    image: elasticsearch:6.5.4
-    container_name: elasticsearch # docker启动后的名称
-    privileged: true
-    # restart: always  #出现异常自动重启
-    ports:
-      - 9200:9200
-      - 9300:9300
-    environment:
-      cluster.name: elasticsearch  # es 名称
-  # kibana
-  kibana:
-    image: kibana:6.5.4
-    container_name: kibana # docker名称
-    environment:
-      elasticsearch.url: http://127.0.0.1:9200
-      server.name: kibana
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch # 依赖es
-````
-
-## 命令
-
-* elasticsearch
- > --restart=always 可以根据个人所需添加
-```shell
- docker run -d --name elk -p 9200:9200 -p 9300:9300 --restart=always elasticsearch:6.5.4
-```
-
 ## 集群搭建
 
 ### yml
@@ -70,6 +32,7 @@ services:
       - /data/es/es3/logs:/usr/share/elasticsearch/logs
       - ./config/es3/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
 ```
+> 注意`network_mode: host`配置必须,不然三个集群网络不通
 
 ### elasticsearch.yml配置
 
@@ -113,28 +76,3 @@ discovery.zen.minimum_master_nodes: 1
 # -f 指定yml文件运行
 docker-compose -f es-cluster.yml up -d
 ```
-
-### 注意点
- 
- * 如果是一台机器做集群那么需要设置`networks`
-
- * 挂载的目录需要有权限`sudo chown R 1000:1000 /data/es/`
-
-* kibana
-
-```shell
-docker run -d --name kb -e ELASTICSEARCH_URL=http://172.17.0.2:9200 -p 5601:5601 kibana:6.5.4
-```
-> 起动好了给它一点时间因为:biking_woman:立刻去访问它会说`Kibana server is not ready yet`
-
-## 遇到的问题
-
- * 挂载容器内部目录到物理机上出现 `[0.001s][error][logging] Error opening log file 'logs/gc.log': Permission denied`
- 
-   权限问题
-   ```shell
-   # 给目录775权限
-   sudo chmod -R 775 /data/es/
-   # 修改文件归属者
-  sudo chown R 1000:1000 /data/es/
-   ```
