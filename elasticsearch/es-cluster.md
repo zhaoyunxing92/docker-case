@@ -77,6 +77,6 @@ docker-compose -f es-cluster.yml up -d
 
 ### 注意点
  
- * 如果是一台机器做集群那么需要设置`networks`
+ * 如果是一台机器做集群那么需要设置`network_mode: host`这样docker就不会虚拟出ip了
 
  * 挂载的目录需要有权限`sudo chown R 1000:1000 /data/es/`
