@@ -1,0 +1,48 @@
+{
+	"info": {
+		"name": "elasticsearch",
+		"_postman_id": "d8817bb0-7773-49a1-9a0a-5353bc6ec375",
+		"description": "es接口编写",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "open-xpack-trial",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/_xpack/license/start_trial?acknowledge=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"_xpack",
+						"license",
+						"start_trial"
+					],
+					"query": [
+						{
+							"key": "acknowledge",
+							"value": "true",
+							"equals": true
+						}
+					]
+				},
+				"description": "开启使用xpack"
+			},
+			"response": []
+		}
+	]
+}
