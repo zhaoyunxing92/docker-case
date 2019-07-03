@@ -5,14 +5,33 @@ services:
   elasticsearch:
     image: elasticsearch:6.5.4
     container_name: elasticsearch # docker启动后的名称
-    privileged: true
-    # restart: always  #出现异常自动重启
-    ports:
-      - 9200:9200
-      - 9300:9300
+    network_mode: host # 公用主机的网络
+    # ports:
+    #   - 9200:9200
+    #   - 9300:9300
     environment:
-       cluster.name: "elasticsearch"  # es 名称
+      # cluster.name: "elasticsearch"  # es 名称
        ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-#     volumes:
-#       - ./config:/usr/share/elasticsearch/config
-
+    volumes:
+      - /data/es/data:/usr/share/elasticsearch/data
+      - /data/es/logs:/usr/share/elasticsearch/logs
+      - ./config/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  # kibana
+  kibana:
+    image: kibana:6.5.4
+    container_name: kibana # docker名称
+    network_mode: host # 公用主机的网络
+    environment:
+      elasticsearch.url: http://127.0.0.1:9200 # es地址
+      server.name: kibana
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch # 依赖es启动   
+  # # es-head
+  # head:
+  #   image: docker.io/mobz/elasticsearch-head:5
+  #   container_name: es-head # docker启动后的名称
+  #   network_mode: host # 公用主机的网络
+  #   ports:
+  #     - 9100:9100     

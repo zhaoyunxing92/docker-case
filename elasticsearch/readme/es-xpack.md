@@ -8,7 +8,7 @@ docker-compose -f es-cluster.yml up -d
 
 ### 开启tral license
 
-> 不想使用curl或者有`postman` 的可以导入[es.postman.json](./postman/es.postman.json)文件,并且设置下`url`变量就可以使用
+> 不想使用curl或者有`postman` 的可以导入[es.postman.json](https://github.com/zhaoyunxing92/docker-case/tree/develop/elasticsearch/postman)文件,并且设置下`url`变量就可以使用
 
 ```sell
 curl -H "Content-Type:application/json" -XPOST  http://127.0.0.1:9200/_xpack/license/start_trial?acknowledge=true
