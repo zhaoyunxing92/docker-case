@@ -1,5 +1,7 @@
 # elasticsearch入门到放弃之docker搭建
 
+[集群版本](./readme/es-cluster.md)
+
 > 基于docker构建的代码地址:<https://github.com/zhaoyunxing92/docker-case/tree/develop/elasticsearch> 可以直接使用,我下面也是按照这个写的这个文档
 
 ## 为什么从搭建开始

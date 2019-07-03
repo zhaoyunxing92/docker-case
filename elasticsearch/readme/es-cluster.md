@@ -1,4 +1,6 @@
-# elasticsearch入门之-搭建
+# elasticsearch入门之docker搭建
+
+[单机版本](../readme.md)
 
 ## 集群版
 
