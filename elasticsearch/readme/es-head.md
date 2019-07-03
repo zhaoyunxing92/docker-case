@@ -1,6 +1,6 @@
 # elasticsearch入门到放弃之elasticsearch-head
 
-[elasticsearch-head](https://github.com/mobz/elasticsearch-head)可理解为[DBeaver](https://dbeaver.io/)一个数据可视化工具，但是这个工具并没有理想中那么好用坑也是很多，我已经在我的github上fork了一份修改后的版本：https://github.com/zhaoyunxing92/elasticsearch-head
+[elasticsearch-head](https://github.com/mobz/elasticsearch-head)可理解为跟[DBeaver](https://dbeaver.io/)一样是一个数据可视化工具，但是这个工具并没有理想中那么好用坑也是很多，我已经在我的github上fork了一份修改后的版本：https://github.com/zhaoyunxing92/elasticsearch-head
 
 ### 系列文章
 
