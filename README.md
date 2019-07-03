@@ -8,7 +8,7 @@
   - [x] [xpack](./elasticsearch/readme/es-xpack.md) xpack安全认证
   - [x] [es-cluster](./elasticsearch/readme/es-cluster.md) es集群配置
   - [x] [es-kibana](./elasticsearch/readme/es-kibana.md)
-  - [x] [es-head](./elasticsearch/readme/es-head.md)  es可视化工具
+  - [x] [es-head](./elasticsearch/readme/es-head.md)  es数据可视化工具
 
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
