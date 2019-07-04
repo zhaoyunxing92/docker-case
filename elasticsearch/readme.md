@@ -157,7 +157,7 @@ docker-compose -f es-cluster.yml up -d
      # 给目录775权限
      sudo chmod -R 775 /data/es/
      # 修改文件归属者
-     sudo chown R 1000:1000 /data/es/
+     sudo chown -R 1000:1000 /data/es/
      ```
 
 * java.lang.RuntimeException: can not run elasticsearch as root
