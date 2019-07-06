@@ -9,10 +9,11 @@ windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
 
 * [x] [elasticsearch](./elasticsearch/readme.md)
 
-  - [x] [xpack](./elasticsearch/readme/es-xpack.md) xpack安全认证
+  - [x] [x-pack](./elasticsearch/readme/es-xpack.md) xpack安全认证
   - [x] [es-cluster](./elasticsearch/readme/es-cluster.md) es集群配置
   - [x] [es-kibana](./elasticsearch/readme/es-kibana.md)
   - [x] [es-head](./elasticsearch/readme/es-head.md)  es数据可视化工具
+  - [x] [es-in-java](https://github.com/zhaoyunxing92/spring-boot-learn-box/tree/master/spring-boot-elasticsearch/elasticsearch-in-java) 在java中使用es
 
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
