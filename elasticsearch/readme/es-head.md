@@ -81,6 +81,12 @@ _reconnect_handler: function() {
 
   完事后会在`_site`平级目录下多出一个`_site.crx`文件，拖到chrome里面就完成了
 
+#### 两种方式运行方式
+
+* 如果你是源码方式运行或者直接在浏览器打开`_site`目录的`index.html`文件那么你需要：`http://localhost:9100/?auth_user=elastic&auth_password=es密码`
+
+* 如果你是插件先在浏览器访问`http://localhost:9100`根据提示完成账号密码输入，完事后再进入插件刷新就可以了
+
 #### 最终效果图
 
 > 如果你的es开启了x-pack那么输入框换成：http://localhost:9100/?auth_user=elastic&auth_password=es密码
