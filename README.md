@@ -14,7 +14,8 @@ windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
   - [x] [es-kibana](./elasticsearch/readme/es-kibana.md)
   - [x] [es-head](./elasticsearch/readme/es-head.md)  es数据可视化工具
   - [x] [es-in-java](https://github.com/zhaoyunxing92/spring-boot-learn-box/tree/master/spring-boot-elasticsearch/elasticsearch-in-java) 在java中使用es
-
+  - [x] [es-in-spring boot](https://github.com/zhaoyunxing92/spring-boot-learn-box/tree/master/spring-boot-elasticsearch/spring-boot-data-elasticsearch)
+  
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
 * [x] [jenkins](./jenkins/readme.md) 自动发布代码
