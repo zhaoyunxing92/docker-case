@@ -15,6 +15,7 @@ windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
   - [x] [es-head](./elasticsearch/readme/es-head.md)  es数据可视化工具
   - [x] [es-in-java](https://github.com/zhaoyunxing92/spring-boot-learn-box/tree/master/spring-boot-elasticsearch/elasticsearch-in-java) 在java中使用es
   - [x] [es-in-spring boot](https://github.com/zhaoyunxing92/spring-boot-learn-box/tree/master/spring-boot-elasticsearch/spring-boot-data-elasticsearch) spring boot跟elasticsearch整合
+  - [x] [spring-data-elasticsearch实践](https://github.com/zhaoyunxing92/spring-boot-learn-box/blob/master/spring-boot-elasticsearch/spring-boot-data-elasticsearch/spring-data-es-practice.md)
 
 * [x] [redis](./redis/readme.md)
 * [x] [mysql](./mysql/readme.md)
