@@ -74,6 +74,6 @@ services:
   按照官方的说法禁止使用guest/guest权限通过除localhost外的访问
   
   ```shell
-   # 开启都可以远程登录，可以数组
+   # 开启都可以远程登录，可以数组限制指定用户
    loopback_users = none
   ```
