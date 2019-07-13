@@ -61,6 +61,7 @@ services:
       - 5672:5672
     volumes:
       - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf # 把当前的rabbitmq.conf挂载到容器中
+    hostname: master #指定主机名称很重要后面集群使用 
 ```
 
 ### 访问
