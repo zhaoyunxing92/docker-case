@@ -1,7 +1,11 @@
 # docker-case
 这个项目主要是为了快速拉起基于docker的服务，在使用中如果有问题可以提交[issuse](https://github.com/zhaoyunxing92/docker-case/issues) 有没有涉及到的欢迎添加进来，（本人的系统是deepin各位在使用中如果遇到系统问题也欢迎提交issuse）
 
+## 代码地址
+
 码云：https://gitee.com/zhaoyunxing92/docker-case
+
+github：https://github.com/zhaoyunxing92/docker-case.git
 
 ## 重要提示
 
