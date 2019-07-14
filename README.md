@@ -21,6 +21,8 @@ windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
 * [x] [mysql](./mysql/readme.md)
 * [x] [jenkins](./jenkins/readme.md) 自动发布代码
 * [x] [nexus](./nexus/readme.md)  maven、node、docker等镜像私服
+* [x] [rabbitmq](./rabbitmq/readme.md) RabbitMQ是采用Erlang语言编写的实现高级消息队列协议（AMQP）的消息中间件
+
 ## docker-compose安装
 
 > [官网安装](https://docs.docker.com/compose/install/)  各种系统安装很详细了,下面是按照官网搬书
