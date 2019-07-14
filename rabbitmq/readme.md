@@ -15,7 +15,7 @@ AMQP(Advanced Message Queuing Protocol 高级消息队列协议)是一个进程�
 
 ### AMQP模型
 
-![AMQPM模型](https://gitee.com/sunny9/resource/raw/master/amqp/amqp.png)
+![AMQPM模型](https://gitee.com/zhaoyunxing92/resource/raw/master/amqp/amqp.png)
 
 ### 专业术语解释
 
