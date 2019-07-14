@@ -5,7 +5,7 @@
 
 码云：https://gitee.com/zhaoyunxing92/docker-case
 
-github：https://github.com/zhaoyunxing92/docker-case.git
+github：https://github.com/zhaoyunxing92/docker-case
 
 ## 重要提示
 
