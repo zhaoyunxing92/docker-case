@@ -15,10 +15,19 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
   # 设置主机名称
   config.vm.hostname="centos-docker"
+  # 设置ssh端口
+  #config.ssh.port=1234
+  # 设置ssh用户名zo
+  #config.ssh.username="ubi"
+  # 设置ssh密码
+  #config.ssh.password="123456"
+  # 
+  #config.ssh.insert_key=false
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+  # config.vm.box_check_update = falsezo
+
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -29,16 +38,18 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  #config.vm.network "forwarded_port", guest: 22, host: 2222, id:"ssh", disabled:"true"
+  #config.vm.network "forwarded_port", guest: 22, host: 1234
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
+  # 设置私有ip
   # config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  # config.vm.network "public_network"
+  config.vm.network "public_network", ip: "192.168.251.10"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -52,28 +63,28 @@ Vagrant.configure("2") do |config|
   #
    config.vm.provider "virtualbox" do |vb|
      # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  
+     #vb.gui = true
      # Customize the amount of memory on the VM:
      vb.memory = "2048"
+     # 设置virtualbox显示名称
+     vb.name = "centos-docker"
+     # 设置cpu
+     vb.cpus=2
    end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
-
-  config.vm.provider "virtualbox" do |v|
-      v.name = "centos-docker"
-  end
-
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
    config.vm.provision "shell", inline: <<-SHELL
-     sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-     sudo yum remove docker docker-common  docker-selinux docker-engine
-     sudo yum-config-manager -y --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-     yum update
-     sudo yum -y install docker-ce
-     sudo systemctl start docker
+      sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+      sudo yum remove docker docker-common  docker-selinux docker-engine
+      sudo yum-config-manager -y --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      sudo yum -y install docker-ce
+      sudo usermod -aG docker $USER
+      sudo systemctl start docker
+      sudo chmod a+rw /var/run/docker.sock
+      sudo systemctl restart docker
    SHELL
 end
