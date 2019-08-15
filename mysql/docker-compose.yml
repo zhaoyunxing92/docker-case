@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  # mysql
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    privileged: true  # 授权
+    command: --default-authentication-plugin=mysql_native_password # 指定使用插件
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456' # root用户密码
+    volumes:
+      - /data/mysql/data:/var/lib/mysql
+      - ./mysql.cnf:/etc/my.cnf # 把当前的mysql.conf挂载到容器中
+     # - './init.sql:/docker-entrypoint-initdb.d' # 初始化sql

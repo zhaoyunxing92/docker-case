@@ -1,0 +1,20 @@
+cluster.name: elastic
+node.name: node-data-2
+node.master: false
+node.data: true
+http.port: 9202
+transport.tcp.port: 9302
+#network.bind_host: 0.0.0.0
+network.host: 0.0.0.0
+# network.publish_host: 172.26.104.209 
+# 设置集群自动发现服务id集合
+discovery.zen.ping.unicast.hosts: ["127.0.0.1:9301","127.0.0.1:9302","127.0.0.1:9303"]
+discovery.zen.minimum_master_nodes: 1
+
+# heald 插件使用
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-Type
+
+# 开启密码认证 xpack
+xpack.security.enabled: true

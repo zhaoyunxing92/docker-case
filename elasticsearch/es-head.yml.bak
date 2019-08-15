@@ -1,0 +1,9 @@
+# es-head
+version: '3'
+services:
+  head:
+    image: docker.io/mobz/elasticsearch-head:5
+    container_name: es-head # docker启动后的名称
+    #network_mode: host # 公用主机的网络
+    ports:
+      - 9100:9100

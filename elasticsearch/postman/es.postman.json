@@ -1,0 +1,96 @@
+{
+	"info": {
+		"name": "elasticsearch",
+		"_postman_id": "d8817bb0-7773-49a1-9a0a-5353bc6ec375",
+		"description": "es接口编写",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "open-xpack-trial",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/_xpack/license/start_trial?acknowledge=true",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"_xpack",
+						"license",
+						"start_trial"
+					],
+					"query": [
+						{
+							"key": "acknowledge",
+							"value": "true",
+							"equals": true
+						}
+					]
+				},
+				"description": "开启使用xpack"
+			},
+			"response": []
+		},
+		{
+			"name": "update-password",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "111111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "elastic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\":\"123456\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/_xpack/security/user/elastic/_password",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"_xpack",
+						"security",
+						"user",
+						"elastic",
+						"_password"
+					]
+				},
+				"description": "修改密码"
+			},
+			"response": []
+		}
+	]
+}

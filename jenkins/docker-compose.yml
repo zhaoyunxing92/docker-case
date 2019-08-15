@@ -1,0 +1,12 @@
+version: '3'
+services:
+  # jenkins
+  jenkins:
+    image: jenkins/jenkins:latest
+    container_name: jenkins
+    #privileged: true  # deppin 系统授权一直不成功后续研究
+    ports:
+      - 8080:8080
+      - 50000:50000
+   #volumes:
+    #  - /var/lib/jenkins:/var/jenkins_home  

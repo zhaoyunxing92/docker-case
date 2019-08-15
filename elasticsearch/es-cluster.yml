@@ -1,0 +1,36 @@
+# 集群配置 伪集群
+version: '3'
+services:
+  es1:
+    image: elasticsearch:6.5.4
+    container_name: es1 # docker启动后的名称
+    network_mode: host # 公用主机的网络
+    environment:
+       #cluster.name: "elasticsearch"  # es 名称config配置了这里就不用重复了
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"  # 自定内存
+    volumes:
+      - /data/es/es1/data:/usr/share/elasticsearch/data
+      - /data/es/es1/logs:/usr/share/elasticsearch/logs
+      - ./config/es1/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  es2:
+    image: elasticsearch:6.5.4
+    container_name: es2 # docker启动后的名称
+    network_mode: host
+    environment:
+       #cluster.name: "elasticsearch"  # es 名称config配置了这里就不用重复了
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"  # 自定内存
+    volumes:
+      - /data/es/es2/data:/usr/share/elasticsearch/data
+      - /data/es/es2/logs:/usr/share/elasticsearch/logs
+      - ./config/es2/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  es3:
+    image: elasticsearch:6.5.4
+    container_name: es3 # docker启动后的名称
+    network_mode: host
+    environment:
+       #cluster.name: "elasticsearch"  # es 名称config配置了这里就不用重复了
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"  # 自定内存
+    volumes:
+      - /data/es/es3/data:/usr/share/elasticsearch/data
+      - /data/es/es3/logs:/usr/share/elasticsearch/logs
+      - ./config/es3/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml

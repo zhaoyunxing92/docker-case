@@ -1,0 +1,4 @@
+[mysqld]
+slow_query_log = 1
+long_query_time = 1
+# skip-grant-tables     #在my.ini，[mysqld]下添加一行，使其登录时跳过权限检查

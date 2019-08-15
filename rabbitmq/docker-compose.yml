@@ -1,0 +1,13 @@
+version: '3'
+services:
+  # rabbitmq
+  rabbit:
+    image: rabbitmq:management # 选择带web界面的版本
+    container_name: rabbit
+    privileged: true  # 授权
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf # 把当前的rabbitmq.conf挂载到容器中
+    hostname: master #指定主机名称很重要后面集群使用 
