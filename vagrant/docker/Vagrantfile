@@ -12,7 +12,13 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
+  # 设置主机名称
+  config.vm.hostname="docker"
+  # 设置使用那个box
   config.vm.box = "centos-docker"
+  # 设置使用的版本
+  config.vm.box_version="1.0"
+
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -54,8 +60,9 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-     vb.memory = "1024"
-	 vb.name="ubi"
+     vb.memory = "2048"
+	 vb.cpus=2
+	 vb.name="centos-docker"
   end
   #
   # View the documentation for the provider you are using for more
