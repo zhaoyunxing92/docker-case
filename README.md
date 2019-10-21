@@ -24,10 +24,26 @@ windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
   - [x] [spring-data-elasticsearch实践](https://github.com/zhaoyunxing92/spring-boot-learn-box/blob/master/spring-boot-elasticsearch/spring-boot-data-elasticsearch/spring-data-es-practice.md)
 
 * [x] [redis](./redis/readme.md)
+
 * [x] [mysql](./mysql/readme.md)
+
 * [x] [jenkins](./jenkins/readme.md) 自动发布代码
+
 * [x] [nexus](./nexus/readme.md)  maven、node、docker等镜像私服
+
 * [x] [rabbitmq](./rabbitmq/readme.md) RabbitMQ是采用Erlang语言编写的实现高级消息队列协议（AMQP）的消息中间件
+
+* [x] [nacos](./nacos/readme.md) nacos是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+
+## vagrant 快速构建docker环境
+
+看完这个三篇文章就可以获取一个安装好docker的虚拟机环境，如果你先麻烦可以直接到[centos-docker](https://app.vagrantup.com/zhaoyunxing/boxes/centos-docker)下载我制作好的box
+
+* [vagrant入门之基本操作](https://www.jianshu.com/p/b3da273689ae)
+
+* [vagrant入门之VagrantFile](https://www.jianshu.com/p/7db398ea9f2a)
+
+* [vagrant入门之制作docker镜像](https://www.jianshu.com/p/224dc1e3abd6)
 
 ## docker-compose安装
 
