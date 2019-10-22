@@ -4,9 +4,9 @@ Apache RocketMQ™是一个开源的分布式消息传递和流数据平台
 
 ## 参考文档
 
-* [rocketmq-console](https://github.com/apache/rocketmq-externals/tree/master/rocketmq-console) https://github.com/apache/rocketmq-externals/tree/master/rocketmq-console 客户端可视化工具
+* [https://github.com/apache/rocketmq-externals/tree/master/rocketmq-console](https://github.com/apache/rocketmq-externals/tree/master/rocketmq-console) 客户端可视化工具
 
-* [docker-rocketmq](https://github.com/foxiswho/docker-rocketmq) https://github.com/foxiswho/docker-rocketmq
+* [https://github.com/foxiswho/docker-rocketmq](https://github.com/foxiswho/docker-rocketmq) 
 
 ## rockermq基本概念
 
