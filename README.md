@@ -32,8 +32,12 @@ windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
 * [x] [nexus](./nexus/readme.md)  maven、node、docker等镜像私服
 
 * [x] [rabbitmq](./rabbitmq/readme.md) RabbitMQ是采用Erlang语言编写的实现高级消息队列协议（AMQP）的消息中间件
+  
+  - [x] [rabbitmq入门到放弃之rabbitmq exchange](https://www.jianshu.com/p/bdccfeb3d71e) 基本概念梳理以及使用
 
 * [x] [nacos](./nacos/readme.md) nacos是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+
+* [x] [rockermq](./rockermq/readme.md) rockermq是一个开源的分布式消息传递和流数据平台
 
 ## vagrant 快速构建docker环境
 
@@ -180,8 +184,9 @@ docker 要求系统的内核版本高于 3.10 ，通过` uname -r` 命令查看�
   ```shell
   sudo groupadd docker # 创建docker组 默认会创建
   sudo usermod -aG docker $USER  # 当前用户添加到docker组
+  # 更新docker组
+  newgrp docker
   sudo service docker restart
   # 普通用户执行还是提示权限不够，则修改/var/run/docker.sock权限 
   sudo chmod a+rw /var/run/docker.sock
   ```
-

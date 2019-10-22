@@ -1,0 +1,46 @@
+version: '3'
+services:
+ # rocket mq name server
+  rmqnamesrv:
+    image: foxiswho/rocketmq:server
+    container_name: rocket-server
+    network_mode: host
+    environment:
+      JAVA_OPT_EXT: "-server -Xms64m -Xmx64m -Xmn64m"
+    ports:
+      - 9876:9876
+    volumes:
+      - /data/rocket/server/logs:/opt/logs
+      - /data/rocket/server/store:/opt/rmqstore
+
+  # rocket mq broker
+  rmqbroker:
+    image: foxiswho/rocketmq:broker
+    container_name: rocket-broker
+    network_mode: host
+    ports:
+      - 10909:10909
+      - 10911:10911
+    volumes:
+      - /data/rocket/broker/logs:/opt/logs
+      - /data/rocket/broker/store:/opt/rmqstore
+      - ./broker.conf:/etc/rocketmq/broker.conf
+    environment:
+      - NAMESRV_ADDR=localhost:9876
+      - JAVA_OPTS:=-Duser.home=/opt
+      - JAVA_OPT_EXT=-server -Xms64m -Xmx64m -Xmn64m
+    command: mqbroker -c /etc/rocketmq/broker.conf
+    depends_on:
+      - rmqnamesrv
+  # rocket console 这个可以不需要
+  rmqconsole:
+    image: styletang/rocketmq-console-ng
+    container_name: rocket-console
+    network_mode: host
+    ports:
+      - 8180:8180
+    environment:
+      - JAVA_OPTS=-Drocketmq.config.namesrvAddr=localhost:9876 -Dserver.port=8180 -Drocketmq.config.isVIPChannel=false
+      - JAVA_OPT_EXT=-Xms128m -Xmx128m -Xmn128m
+    depends_on:
+      - rmqnamesrv
