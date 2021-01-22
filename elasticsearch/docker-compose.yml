@@ -1,10 +1,13 @@
 # 单个服务
-version: '3'
+version: '3.5'
 services:
   # elasticsearch
   elasticsearch:
     image: elasticsearch:7.10.1
     container_name: elasticsearch # docker启动后的名称
+    #network_mode: host # 公用主机的网络
+    networks:
+      - elastic
     ports:
       - 9200:9200
       - 9300:9300
@@ -14,25 +17,21 @@ services:
     volumes:
       #- ~/data/es:/usr/share/elasticsearch/data
       - ./config/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    networks:
-      - elastic  
+  
   # kibana
   kibana:
     image: kibana:7.10.1
     container_name: kibana # docker名称
-    environment:
-      elasticsearch.url: http://localhost:9200 # es地址
-      server.name: kibana
-      i18n.locale: zh-CN
+    #network_mode: host # 公用主机的网络
+    networks:
+      - elastic
     volumes:
       - ./config/kibana/kibana.yml:/opt/kibana/config/kibana.yml
     ports:
       - 5601:5601
     depends_on:
       - elasticsearch # 依赖es启动
-    networks:
-      - elastic 
-
 networks:
   elastic:
+    name: elastic
     driver: bridge
