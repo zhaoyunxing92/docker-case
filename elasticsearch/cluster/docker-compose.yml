@@ -1,0 +1,59 @@
+# 单个服务
+version: '3.5'
+services:
+  # es1
+  es1:
+    image: elasticsearch:7.10.1
+    container_name: es1 # docker启动后的名称
+    networks:
+      - elastic
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - ./cofg/es1/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  # es2
+  es2:
+    image: elasticsearch:7.10.1
+    container_name: es2 
+    networks:
+      - elastic
+    ports:
+      - 9202:9200
+      - 9302:9300
+    environment:
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - ./cofg/es2/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  # es3
+  es3:
+    image: elasticsearch:7.10.1
+    container_name: es3
+    networks:
+      - elastic
+    ports:
+      - 9203:9200
+      - 9303:9300
+    environment:
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      - ./cofg/es3/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      # kibana
+  kibana:
+    image: kibana:7.10.1
+    container_name: kibana # docker名称
+    #network_mode: host # 公用主机的网络
+    networks:
+      - elastic
+    volumes:
+      - ./cofg/kibana/kibana.yml:/opt/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    depends_on:
+      - es1 # 依赖es启动        
+networks:
+  elastic:
+    name: elastic
+    driver: bridge

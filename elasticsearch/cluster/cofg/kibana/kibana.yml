@@ -1,0 +1,7 @@
+server.name: kibana
+server.host: 0.0.0.0
+elasticsearch.hosts: [ "http://es1:9200" ]
+# 中文
+i18n.locale: zh-CN
+
+#xpack.reporting.capture.browser.chromium.disableSandbox: false
