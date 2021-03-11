@@ -3,5 +3,7 @@ server.host: 0.0.0.0
 elasticsearch.hosts: [ "http://elasticsearch:9200" ]
 # 中文
 i18n.locale: zh-CN
-
+elasticsearch.username: "kibana"
+# elasticsearch.password: "kibana"
+# xpack.security.encryptionKey: "something_at_least_32_characters"
 #xpack.reporting.capture.browser.chromium.disableSandbox: false
