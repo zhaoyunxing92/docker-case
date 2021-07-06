@@ -8,7 +8,7 @@
 Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "k8s-node-#{i}" do |node|
-      config.vm.box = "docker/7"
+      config.vm.box = "centos/7"
       # 设置虚拟机的主机名
       node.vm.hostname="k8s-node-#{i}"
       # 设置虚拟机的IP
