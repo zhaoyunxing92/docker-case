@@ -18,12 +18,19 @@ if ! type docker > /dev/null 2>&1; then
     # 添加用户组
     sudo usermod -aG docker $USER && newgrp docker
     # 设置数据源
-    sudo sh -c "echo -e '{\n  \"registry-mirrors\":[\"https://75lag9v5.mirror.aliyuncs.com\"]\n}' > /etc/docker/daemon.json"
+    sudo sh -c "echo -e '{\n \"exec-opts\":[\"native.cgroupdriver=systemd\"],\n \"registry-mirrors\":[\"https://75lag9v5.mirror.aliyuncs.com\"]\n}' > /etc/docker/daemon.json"
     # 加载配置
     sudo systemctl daemon-reload
     # 重启docker
     sudo systemctl restart docker
 fi
+# 设置cgroup
+sudo sh -c "echo -e '{\n \"exec-opts\":[\"native.cgroupdriver=systemd\"],\n \"registry-mirrors\":[\"https://75lag9v5.mirror.aliyuncs.com\"]\n}' > /etc/docker/daemon.json"
+
+# 加载配置
+sudo systemctl daemon-reload
+# 重启docker
+sudo systemctl restart docker
 
 # 时间同步
 sudo systemctl start chronyd

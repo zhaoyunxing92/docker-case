@@ -22,6 +22,8 @@ Vagrant.configure("2") do |config|
     master.vm.hostname="k8s-master"
     # install docker
     master.vm.provision "shell", path:"script/k8s_install.sh"
+    # set port
+    master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
     # set network
     master.vm.network "private_network", ip: "192.168.56.100", netmask: "255.255.255.0"
     # set memory、cpu
@@ -41,16 +43,18 @@ Vagrant.configure("2") do |config|
            node.vm.hostname="k8s-node#{i}"
            # install docker
            node.vm.provision "shell", path:"script/k8s_install.sh"
+           # set ssh port
+           node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
            # 设置虚拟机的IP
            node.vm.network "private_network", ip: "192.168.56.#{100+i}", netmask: "255.255.255.0"
            # VirtaulBox相关配置
-           node.vm.provider "virtualbox" do |v|
+           node.vm.provider "virtualbox" do |vb|
                # 设置虚拟机的名称
-               v.name = "k8s-node#{i}"
+               vb.name = "k8s-node#{i}"
                # 设置虚拟机的内存大小
-               v.memory = 2048
+               vb.memory = 2048
                # 设置虚拟机的CPU个数
-               v.cpus = 2
+               vb.cpus = 2
            end
        end
   end

@@ -5,6 +5,21 @@
 * [vagrant 2.2.16](https://www.vagrantup.com/downloads) 跨平台虚拟化工具
 * [virtualbox](https://www.virtualbox.org/wiki/Downloads) 开源免费的虚拟机
 
+## 配置过程
+
+### 设置cgroup
+
+> docker 默认cgroup是`driver`,k8s推荐使用`systemd` 所以：sudo vi /etc/docker/daemon.json
+
+```json
+{
+  "exec-opts":["native.cgroupdriver=systemd"],
+  "registry-mirrors":["https://75lag9v5.mirror.aliyuncs.com"]
+}
+```
+
+
+
 ## 可能遇到的问题
 
 * 执行`vagrant up` 遇到一下异常
