@@ -1,10 +1,10 @@
 {
  "name":"centos-docker",
  "versions":[{
-     "version":"1.0",
+     "version":"0.0.1",
 	 "providers":[{
 	    "name":"virtualbox",
-		  "url":"./package.box"
+		  "url":"./docker.box"
 	  }]
    }]
 }

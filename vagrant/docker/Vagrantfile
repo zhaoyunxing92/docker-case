@@ -1,7 +1,9 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
-  # 设置主机名称
-  config.vm.hostname="centos-docker"
+  # 设置虚拟机的Box
+  config.vm.box = "centos-docker"
+  # 设置版本
+  config.vm.box_version = "0.0.1"
   # 系统配置
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
@@ -11,4 +13,8 @@ Vagrant.configure("2") do |config|
     vb.cpus=2
   end
   config.vm.provision "shell", path:"script/docker_install.sh"
+  # push
+  config.push.define "heroku" do |push|
+    push.app = "zhaoyunxing/centos-docker"
+  end
 end

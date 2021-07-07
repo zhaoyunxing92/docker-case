@@ -42,3 +42,17 @@ sudo usermod -aG docker $USER && newgrp docker
 
 ## 打包
 
+> 我这里打包到指定目录里面 [package doc](https://www.vagrantup.com/docs/cli/package) 
+
+```shell
+vagrant package --output ./pkg/docker.box
+```
+
+## 添加到本地
+
+> `cd pkg` 执行一下命令
+
+```shell
+vagrant box add metadata.json
+```
+
