@@ -43,10 +43,7 @@ sudo systemctl stop iptables
 sudo systemctl disable iptables
 
 # 禁止selinux
-sudo sh -c "echo -e '
-SELINUX=disabled
-SELINUXTYPE=targeted' > /etc/selinux/config"
-
+sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config 
 
 # 禁止swap分区
 sudo swapoff -a

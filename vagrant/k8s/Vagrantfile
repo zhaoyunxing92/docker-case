@@ -10,7 +10,10 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos-docker"
   # 设置版本
   config.vm.box_version = "0.0.1"
-  
+
+  config.ssh.username = "vagrant" 
+  config.ssh.password = "vagrant"
+  # file sync disabled
   config.vm.synced_folder ".", "/vagrant", disabled: true
   #config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
   # master
