@@ -10,52 +10,22 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos-docker"
   # 设置版本
   config.vm.box_version = "0.0.1"
-
+  # 设置vagrant名称
+  config.vm.define "centos-k8s"
+  config.vm.hostname="centos-k8s"
+  # 设置登录密码
   config.ssh.username = "vagrant" 
   config.ssh.password = "vagrant"
   # file sync disabled
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  #config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
-  # master
-  config.vm.define "k8s-master" do |master|
-    # set hostname
-    master.vm.hostname="k8s-master"
-    # install docker
-    master.vm.provision "shell", path:"script/k8s_install.sh"
-    # set port
-    master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
-    # set network
-    master.vm.network "private_network", ip: "192.168.56.100", netmask: "255.255.255.0"
-    # set memory、cpu
-    master.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"
-      # 设置virtualbox显示名称
-      vb.name = "k8s-master"
-      # 设置cpu
-      vb.cpus=2
-    end
-  end
-  
-  # node
-  (1..2).each do |i|
-       config.vm.define "k8s-node#{i}" do |node|
-           # 设置虚拟机的主机名
-           node.vm.hostname="k8s-node#{i}"
-           # install docker
-           node.vm.provision "shell", path:"script/k8s_install.sh"
-           # set ssh port
-           node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
-           # 设置虚拟机的IP
-           node.vm.network "private_network", ip: "192.168.56.#{100+i}", netmask: "255.255.255.0"
-           # VirtaulBox相关配置
-           node.vm.provider "virtualbox" do |vb|
-               # 设置虚拟机的名称
-               vb.name = "k8s-node#{i}"
-               # 设置虚拟机的内存大小
-               vb.memory = 2048
-               # 设置虚拟机的CPU个数
-               vb.cpus = 2
-           end
-       end
+  # isntall k8s
+  config.vm.provision "shell", path:"script/k8s_install.sh"
+  # set memory、cpu
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    # 设置virtualbox显示名称
+    vb.name = "centos-k8s"
+    # 设置cpu
+    vb.cpus=2
   end
 end

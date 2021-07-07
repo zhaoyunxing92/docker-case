@@ -1,0 +1,11 @@
+{
+ "name":"centos-k8s",
+ "description": "这个主要是安装k8s的box",
+ "versions":[{
+     "version":"0.0.1",
+	 "providers":[{
+	    "name":"virtualbox",
+		  "url":"./k8s.box"
+	  }]
+   }]
+}
