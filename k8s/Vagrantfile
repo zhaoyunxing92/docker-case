@@ -28,9 +28,9 @@ Vagrant.configure("2") do |config|
   
   # node
   (1..2).each do |i|
-       config.vm.define "k8s-node-#{i}" do |node|
+       config.vm.define "k8s-node#{i}" do |node|
            # 设置虚拟机的主机名
-           node.vm.hostname="k8s-node-#{i}"
+           node.vm.hostname="k8s-node#{i}"
            # install docker
            node.vm.provision "shell", path:"docker_install.sh"
            # 设置虚拟机的IP
@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
            # VirtaulBox相关配置
            node.vm.provider "virtualbox" do |v|
                # 设置虚拟机的名称
-               v.name = "k8s-node-#{i}"
+               v.name = "k8s-node#{i}"
                # 设置虚拟机的内存大小
                v.memory = 2048
                # 设置虚拟机的CPU个数
