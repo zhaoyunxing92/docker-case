@@ -7,8 +7,7 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   # 设置虚拟机的Box
-  config.vm.box = "centos-docker"
-  # 设置版本
+  config.vm.box = "zhaoyunxing/centos-docker"
   config.vm.box_version = "0.0.1"
   # 设置vagrant名称
   config.vm.define "centos-k8s"
