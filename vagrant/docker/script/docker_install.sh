@@ -24,29 +24,3 @@ if ! type docker > /dev/null 2>&1; then
     # 添加用户组
     sudo usermod -aG docker $USER && newgrp docker
 fi
-
-# 时间同步
-sudo systemctl start chronyd
-sudo systemctl enable chronyd
-
-# hosts设置
-sudo sh -c "echo -e '
-192.168.56.100 k8s-master
-192.168.56.101 k8s-node1
-192.168.56.102 k8s-node2' >> /etc/hosts"
-
-# 关闭iptables、firewalld
-sudo systemctl stop firewalld
-sudo systemctl disable firewalld
-
-sudo systemctl stop iptables
-sudo systemctl disable iptables
-
-# 禁止selinux
-sudo sh -c "echo -e '
-SELINUX=disabled
-SELINUXTYPE=targeted' > /etc/selinux/config"
-
-# 禁止swap分区
-sudo swapoff -a
-sudo sed -i '/swap/s/^/#/g' /etc/fstab
