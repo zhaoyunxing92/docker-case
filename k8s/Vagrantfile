@@ -9,9 +9,9 @@ Vagrant.configure("2") do |config|
   # 设置虚拟机的Box
   config.vm.box = "zhaoyunxing/centos-k8s"
   config.vm.box_version = "0.0.1"
-  # 设置密码
-  config.ssh.username = "root" 
-  config.ssh.password = "123456"
+  # 设置root用户
+  config.ssh.username = "vagrant" 
+  config.ssh.password = "vagrant"
   # file sync disabled
   config.vm.synced_folder ".", "/vagrant", disabled: true
   # master

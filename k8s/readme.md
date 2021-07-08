@@ -59,6 +59,12 @@ docker pull registry.aliyuncs.com/google_containers/coredns:1.8.0
 docker tag registry.aliyuncs.com/google_containers/coredns:1.8.0 registry.aliyuncs.com/google_containers/coredns:v1.8.0
 ```
 
+#### 删除旧的
+
+```shell
+docker rmi registry.aliyuncs.com/google_containers/coredns:1.8.0
+```
+
 #### kubeadm init
 
 ```shell
@@ -79,35 +85,133 @@ sudo sh -c "echo 'export KUBECONFIG=/etc/kubernetes/admin.conf' >> /etc/profile"
 source /etc/profile
 ```
 
+### 安装网络插件flannle
+
+
+
 #### kubeadm token 重新设置
 
 ```shell
 kubeadm token create --print-join-command
 ```
 
+
+
 ## 可能遇到的问题
 
-* 执行`vagrant up` 遇到一下异常
-
-> 异常信息
-
-```shel
-There was an error while executing `VBoxManage`, a CLI used by Vagrant
-for controlling VirtualBox. The command and stderr is shown below.
-
-Command: ["hostonlyif", "create"]
-
-Stderr: 0%...
-Progress state: NS_ERROR_FAILURE
-VBoxManage: error: Failed to create the host-only adapter
-VBoxManage: error: VBoxNetAdpCtl: Error while adding new interface: failed to open /dev/vboxnetctl: No such file or directory
-VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component HostNetworkInterfaceWrap, interface IHostNetworkInterface
-VBoxManage: error: Context: "RTEXITCODE handleCreate(HandlerArg *)" at line 71 of file VBoxManageHostonly.cpp
-```
-
-> 解决方案 https://www.cnblogs.com/xkfeng/p/8639696.html
+###  scheduler和controller-manager端口起不来
 
 ```shell
-sudo spctl --master-disable
+[root@k8s-master ~]# kubectl get cs
+Warning: v1 ComponentStatus is deprecated in v1.19+
+NAME                 STATUS      MESSAGE                                                                                       ERROR
+scheduler            Unhealthy   Get "http://127.0.0.1:10251/healthz": dial tcp 127.0.0.1:10251: connect: connection refused
+controller-manager   Unhealthy   Get "http://127.0.0.1:10252/healthz": dial tcp 127.0.0.1:10252: connect: connection refused
+etcd-0               Healthy     {"health":"true"}
+```
+
+#### 解决
+
+> 主要问题是`--port=0`导致，注释掉就可以
+
+* `vim /etc/kubernetes/manifests/kube-scheduler.yaml` 注释端口
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: kube-scheduler
+    tier: control-plane
+  name: kube-scheduler
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-scheduler
+    - --authentication-kubeconfig=/etc/kubernetes/scheduler.conf
+    - --authorization-kubeconfig=/etc/kubernetes/scheduler.conf
+    - --bind-address=127.0.0.1
+    - --kubeconfig=/etc/kubernetes/scheduler.conf
+    - --leader-elect=true
+#    - --port=0  # 注释端口
+    image: registry.aliyuncs.com/google_containers/kube-scheduler:v1.21.2
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 8
+      httpGet:
+        host: 127.0.0.1
+        path: /healthz
+        port: 10259
+        scheme: HTTPS
+.....
+```
+
+* `vim /etc/kubernetes/manifests/kube-controller-manager.yaml` 同样注释端口
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: kube-controller-manager
+    tier: control-plane
+  name: kube-controller-manager
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-controller-manager
+    - --allocate-node-cidrs=true
+    - --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf
+    - --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf
+    - --bind-address=127.0.0.1
+    - --client-ca-file=/etc/kubernetes/pki/ca.crt
+    - --cluster-cidr=10.24.0.0/16
+    - --cluster-name=kubernetes
+    - --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+    - --cluster-signing-key-file=/etc/kubernetes/pki/ca.key
+    - --controllers=*,bootstrapsigner,tokencleaner
+    - --kubeconfig=/etc/kubernetes/controller-manager.conf
+    - --leader-elect=true
+#    - --port=0
+    - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+    - --root-ca-file=/etc/kubernetes/pki/ca.crt
+    - --service-account-private-key-file=/etc/kubernetes/pki/sa.key
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --use-service-account-credentials=true
+    image: registry.aliyuncs.com/google_containers/kube-controller-manager:v1.21.2
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 8
+      httpGet:
+        host: 127.0.0.1
+        path: /healthz
+        port: 10257
+        scheme: HTTPS
+.....
+```
+
+* 重新启动
+
+```she
+systemctl restart kubelet.service
+```
+
+
+
+### kubeadm join的时候提示没有关闭iptables
+
+```shell
+error execution phase preflight: [preflight] Some fatal errors occurred:
+	[ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
+```
+
+#### 解决
+
+```shell
+sudo sh -c " echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
 ```
 
