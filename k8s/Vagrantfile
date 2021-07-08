@@ -7,25 +7,23 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   # 设置虚拟机的Box
-  config.vm.box = "contos-k8s"
-  # 设置版本
-  #config.vm.box_version = "0.0.1"
-
-  config.ssh.username = "vagrant" 
-  config.ssh.password = "vagrant"
+  config.vm.box = "zhaoyunxing/centos-k8s"
+  config.vm.box_version = "0.0.1"
+  # 设置密码
+  config.ssh.username = "root" 
+  config.ssh.password = "123456"
   # file sync disabled
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  #config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
   # master
   config.vm.define "k8s-master" do |master|
     # set hostname
-    master.vm.hostname="centos-k8s"
-    # install docker
-    master.vm.provision "shell", path:"script/master_install.sh"
+    master.vm.hostname="k8s-master"
+    # master init
+    master.vm.provision "shell", path:"script/node_init.sh"
     # set port
     master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
     # set network
-    master.vm.network "private_network", ip: "192.168.56.100", netmask: "255.255.255.0"
+    master.vm.network "private_network", ip: "192.168.56.100"
     # set memory、cpu
     master.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
@@ -41,12 +39,12 @@ Vagrant.configure("2") do |config|
        config.vm.define "k8s-node#{i}" do |node|
            # 设置虚拟机的主机名
            node.vm.hostname="k8s-node#{i}"
-           # install docker
-           #node.vm.provision "shell", path:"script/k8s_install.sh"
            # set ssh port
            node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
            # 设置虚拟机的IP
-           node.vm.network "private_network", ip: "192.168.56.#{100+i}", netmask: "255.255.255.0"
+           node.vm.network "private_network", ip: "192.168.56.#{100+i}"
+           # node init
+           node.vm.provision "shell", path:"script/node_init.sh"
            # VirtaulBox相关配置
            node.vm.provider "virtualbox" do |vb|
                # 设置虚拟机的名称

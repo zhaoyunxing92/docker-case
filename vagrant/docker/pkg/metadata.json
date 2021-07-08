@@ -1,5 +1,5 @@
 {
- "name":"centos-docker",
+ "name":"zhaoyunxing/centos-docker",
  "description": "这个主要是安装docker的box",
  "versions":[{
      "version":"0.0.1",

@@ -1,5 +1,5 @@
 {
- "name":"centos-k8s",
+ "name":"zhaoyunxing/centos-k8s",
  "description": "这个主要是安装k8s的box",
  "versions":[{
      "version":"0.0.1",
