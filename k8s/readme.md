@@ -98,6 +98,8 @@ source /etc/profile
 
 ##### 1. 先下载
 
+> 可以直接用[kube-flannel.yml](./config/kube-flannel.yml)
+
 ```shell
 curl https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml > kube-flannel.yml
 ```
@@ -159,7 +161,37 @@ I0709 08:28:28.859608       1 main.go:550] Defaulting external address to interf
 W0709 08:28:29.040955       1 client_config.go:608] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
 ```
 
+### 使用ipvs负载均衡
+
+> [啥是ipvs](https://www.jianshu.com/p/7cff00e253f4) 可以看看
+
+```yaml
+     28     iptables:
+     29       masqueradeAll: false
+     30       masqueradeBit: null
+     31       minSyncPeriod: 0s
+     32       syncPeriod: 0s
+     33     ipvs:
+     34       excludeCIDRs: null
+     35       minSyncPeriod: 0s
+     36       scheduler: ""
+     37       strictARP: false
+     38       syncPeriod: 0s
+     39       tcpFinTimeout: 0s
+     40       tcpTimeout: 0s
+     41       udpTimeout: 0s
+     42     kind: KubeProxyConfiguration
+     43     metricsBindAddress: ""
+     44     mode: "ipvs" # 这里指定用ipvs
+     45     nodePortAddresses: null
+     46     oomScoreAdj: null
+```
+
+
+
 #### kubeadm token 重新设置
+
+> 这一步**不是必须**，如果上面join忘记了可以重新生成
 
 ```shell
 kubeadm token create --print-join-command
