@@ -12,13 +12,13 @@ Vagrant.configure("2") do |config|
   # 设置vagrant名称
   config.vm.define "centos-k8s"
   config.vm.hostname="centos-k8s"
-
+  # 设置密码
+  config.ssh.username = "vagrant" 
+  config.ssh.password = "vagrant"
   # file sync disabled
   config.vm.synced_folder ".", "/vagrant", disabled: true
   # isntall k8s
   config.vm.provision "shell", path:"script/k8s_install.sh"
-  # set ip
-  config.vm.network "private_network", ip: "192.168.56.100"
   # set memory、cpu
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"

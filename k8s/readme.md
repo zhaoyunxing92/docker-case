@@ -8,17 +8,24 @@
 * [virtualbox](https://www.virtualbox.org/wiki/Downloads) 开源免费的虚拟机
 * k8s version v1.21.2
 
+##  vagrant环境说明
+
+* 需要使用`root`用户进去开始安装，不然会遇到很多问题
+
+|  节点  |          连接方式          | 密码    |
+| :----: | :------------------------: | ------- |
+| master | ssh root@127.0.0.1 -p 2200 | vagrant |
+| node1  | ssh root@127.0.0.1 -p 2201 | vagrant |
+| node2  | ssh root@127.0.0.1 -p 2202 | vagrant |
+
 ## 配置过程
 
-### 设置cgroup
+### 先创建三个虚拟机
 
-> docker 默认cgroup是`driver`,k8s推荐使用`systemd` 所以：sudo vi /etc/docker/daemon.json
+> 进入目录执行下面命令就可以了`docker-case/k8s`
 
-```json
-{
-  "exec-opts":["native.cgroupdriver=systemd"],
-  "registry-mirrors":["https://75lag9v5.mirror.aliyuncs.com"]
-}
+```shell
+vagrant up
 ```
 
 ### 修改images为阿里云
@@ -68,11 +75,11 @@ docker rmi registry.aliyuncs.com/google_containers/coredns:1.8.0
 #### kubeadm init
 
 ```shell
-sudo kubeadm init \
-    --apiserver-advertise-address=192.168.56.100 \
-    --image-repository registry.aliyuncs.com/google_containers \
-    --kubernetes-version v1.21.2 \
-    --pod-network-cidr=10.24.0.0/16
+kubeadm init \
+ --apiserver-advertise-address=192.168.56.200 \
+ --image-repository registry.aliyuncs.com/google_containers \
+ --kubernetes-version v1.21.2 \
+ --pod-network-cidr=10.244.0.0/16
 ```
 
 ### 初始化kube
@@ -81,13 +88,76 @@ sudo kubeadm init \
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-sudo sh -c "echo 'export KUBECONFIG=/etc/kubernetes/admin.conf' >> /etc/profile"
+sh -c "echo 'export KUBECONFIG=/etc/kubernetes/admin.conf' >> /etc/profile"
 source /etc/profile
 ```
 
 ### 安装网络插件flannle
 
+> 由于我们上面使用的ip(192.168.56.200)不在eth0网卡上需要修改网卡可以通过`ip add`查看网卡
 
+##### 1. 先下载
+
+```shell
+curl https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml > kube-flannel.yml
+```
+
+##### 2.开始编辑`vi kube-flannel.yml`
+
+```yam
+    181       containers:
+    182       - name: kube-flannel
+    183         image: quay.io/coreos/flannel:v0.14.0
+    184         command:
+    185         - /opt/bin/flanneld
+    186         args:
+    187         - --ip-masq
+    188         - --kube-subnet-mgr
+    189         - --iface=eth1 # 这个地方指定网卡
+```
+
+##### 3.apply flannel
+
+```shell
+[root@k8s-master ~]# kubectl apply -f kube-flannel.yml
+Warning: policy/v1beta1 PodSecurityPolicy is deprecated in v1.21+, unavailable in v1.25+
+podsecuritypolicy.policy/psp.flannel.unprivileged created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds created
+```
+
+#### 4.验证结果
+
+> 先获取pods然后查看一个pod的日志即可
+
+```shell
+[root@k8s-master ~]# kubectl get pods --all-namespaces
+NAMESPACE     NAME                                 READY   STATUS    RESTARTS   AGE
+kube-system   coredns-59d64cd4d4-2d46n             1/1     Running   0          19m
+kube-system   coredns-59d64cd4d4-jvbvs             1/1     Running   0          19m
+kube-system   etcd-k8s-master                      1/1     Running   0          20m
+kube-system   kube-apiserver-k8s-master            1/1     Running   0          20m
+kube-system   kube-controller-manager-k8s-master   1/1     Running   0          15m
+kube-system   kube-flannel-ds-hvsmm                1/1     Running   0          95s
+kube-system   kube-flannel-ds-lhdpp                1/1     Running   0          95s
+kube-system   kube-flannel-ds-nbxl4                1/1     Running   0          95s
+kube-system   kube-proxy-6gj8p                     1/1     Running   0          18m
+kube-system   kube-proxy-jf8v6                     1/1     Running   0          18m
+kube-system   kube-proxy-srx5t                     1/1     Running   0          19m
+kube-system   kube-scheduler-k8s-master            1/1     Running   0          15m
+```
+
+> 由日志可以看到`Using interface with name eth1 and address 192.168.56.200`
+
+```shell
+[root@k8s-master ~]# kubectl logs -n kube-system kube-flannel-ds-nbxl4
+I0709 08:28:28.858390       1 main.go:533] Using interface with name eth1 and address 192.168.56.200
+I0709 08:28:28.859608       1 main.go:550] Defaulting external address to interface address (192.168.56.200)
+W0709 08:28:29.040955       1 client_config.go:608] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+```
 
 #### kubeadm token 重新设置
 
@@ -114,7 +184,7 @@ etcd-0               Healthy     {"health":"true"}
 
 > 主要问题是`--port=0`导致，注释掉就可以
 
-* `vim /etc/kubernetes/manifests/kube-scheduler.yaml` 注释端口
+* `vi /etc/kubernetes/manifests/kube-scheduler.yaml` 注释端口
 
 ```yaml
 apiVersion: v1
@@ -148,7 +218,7 @@ spec:
 .....
 ```
 
-* `vim /etc/kubernetes/manifests/kube-controller-manager.yaml` 同样注释端口
+* `vi /etc/kubernetes/manifests/kube-controller-manager.yaml` 同样注释端口
 
 ```yaml
 apiVersion: v1
@@ -200,9 +270,7 @@ spec:
 systemctl restart kubelet.service
 ```
 
-
-
-### kubeadm join的时候提示没有关闭iptables
+### kubeadm join的时候提示没有关闭bridge-nf-call-iptables 
 
 ```shell
 error execution phase preflight: [preflight] Some fatal errors occurred:
@@ -214,4 +282,10 @@ error execution phase preflight: [preflight] Some fatal errors occurred:
 ```shell
 sudo sh -c " echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
 ```
+
+### node无法加入master节点
+
+> 之前我使用的ip是`192.168.56.100`跟VirualBox的DHCP服务冲突了选择端口的时候需要注意下ip选择范围
+
+![image-20210709163923103](/Users/docker/code/github/docker-case/images/image-20210709163923103.png)
 
