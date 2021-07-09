@@ -2,6 +2,8 @@
 
 # k8s前期准备工作
 
+我这里主要使用[docker-case](https://github.com/zhaoyunxing92/docker-case/tree/develop/k8s)构建本地k8s(v1.21.2)集群的
+
 ## 软件准备
 
 * [vagrant 2.2.16](https://www.vagrantup.com/downloads) 跨平台虚拟化工具
@@ -165,6 +167,9 @@ W0709 08:28:29.040955       1 client_config.go:608] Neither --kubeconfig nor --m
 
 > [啥是ipvs](https://www.jianshu.com/p/7cff00e253f4) 可以看看
 
+#### 修改配置
+> 执行`kubectl edit  configmap -n kube-system  kube-proxy`
+
 ```yaml
      28     iptables:
      29       masqueradeAll: false
@@ -187,17 +192,46 @@ W0709 08:28:29.040955       1 client_config.go:608] Neither --kubeconfig nor --m
      46     oomScoreAdj: null
 ```
 
+#### 杀死所有的 `kube-proxy` pod
 
+```shell
+[root@k8s-master ~]# kubectl get pod -n kube-system |grep kube-proxy
+kube-proxy-6gj8p                     1/1     Running   0          149m
+kube-proxy-jf8v6                     1/1     Running   0          150m
+kube-proxy-srx5t                     1/1     Running   0          150m
+[root@k8s-master ~]# kubectl delete  pod -n kube-system kube-proxy-6gj8p kube-proxy-jf8v6 kube-proxy-srx5t
+pod "kube-proxy-6gj8p" deleted
+pod "kube-proxy-jf8v6" deleted
+pod "kube-proxy-srx5t" deleted
+```
 
-#### kubeadm token 重新设置
+#### 验证结果
+
+> Using ipvs Proxier.
+
+```shell
+[root@k8s-master ~]# kubectl get pod -n kube-system |grep kube-proxy
+kube-proxy-4fvxf                     1/1     Running   0          2m41s
+kube-proxy-j79lj                     1/1     Running   0          2m32s
+kube-proxy-l4vjz                     1/1     Running   0          2m41s
+[root@k8s-master ~]# kubectl logs -n kube-system kube-proxy-4fvxf
+Error from server (NotFound): the server could not find the requested resource ( pods/log kube-proxy-4fvxf)
+[root@k8s-master ~]# kubectl logs -n kube-system kube-proxy-j79lj
+I0709 10:43:06.511908       1 node.go:172] Successfully retrieved node IP: 10.0.2.15
+I0709 10:43:06.511989       1 server_others.go:140] Detected node IP 10.0.2.15
+I0709 10:43:06.551606       1 server_others.go:206] kube-proxy running in dual-stack mode, IPv4-primary
+I0709 10:43:06.551773       1 server_others.go:274] Using ipvs Proxier.
+I0709 10:43:06.551794       1 server_others.go:276] creating dualStackProxier for ipvs.
+W0709 10:43:06.551816       1 server_others.go:512] detect-local-mode set to ClusterCIDR, but no IPv6 cluster CIDR defined, , defaulting to no-op detect-local for IPv6
+```
+
+### kubeadm token 重新设置
 
 > 这一步**不是必须**，如果上面join忘记了可以重新生成
 
 ```shell
 kubeadm token create --print-join-command
 ```
-
-
 
 ## 可能遇到的问题
 
