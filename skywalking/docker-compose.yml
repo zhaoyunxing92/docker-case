@@ -1,0 +1,38 @@
+version: '3.5'
+services:
+  # elasticsearch
+  elasticsearch:
+    image: elasticsearch:7.10.1
+    container_name: elasticsearch # docker启动后的名称
+    networks:
+      - skywalking
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    volumes:
+      #- ~/data/es:/usr/share/elasticsearch/data
+      - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  
+  # skywalking
+  skywalking:
+    image: apache/skywalking-oap-server:8.6.0-es7
+    container_name: skywalking
+    networks:
+      - skywalking
+    environment:
+      SW_STORAGE: elasticsearch7
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+    ports:
+      - 8080:8080
+      - 10800:10800
+      - 11800:11800
+      - 12800:12800
+    depends_on:
+      - elasticsearch # 依赖es启动
+
+networks:
+  skywalking:
+    name: skywalking
+    driver: bridge

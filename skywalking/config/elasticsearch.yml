@@ -1,0 +1,14 @@
+cluster.name: elastic
+http.port: 9200
+transport.tcp.port: 9300
+network.host: 0.0.0.0
+# heald 插件使用
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-Type
+
+# 开启密码认证 x-pack
+# xpack.security.enabled: true
+# xpack.security.authc.accept_default_password: false
+# 单个
+discovery.type: single-node
