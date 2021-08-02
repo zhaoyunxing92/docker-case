@@ -9,7 +9,7 @@ github：https://github.com/zhaoyunxing92/docker-case
 
 ## 重要提示
 
-windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了
+windows用户请自觉放弃！自觉放弃！放弃！，不要折腾了，当然你会vagrant还是可以看看的
 
 ## 进展
 
