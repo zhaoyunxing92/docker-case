@@ -133,7 +133,7 @@ xpack.security.enabled: true
 
 ```shell
 # -f 指定yml文件运行
-docker-compose -f es-cluster.yml up -d
+docker-compose -f cluster/docker-compose.yml up -d
 ```
 ### 验证
 
