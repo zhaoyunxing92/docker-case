@@ -127,7 +127,7 @@ xpack.security.enabled: true
 
 ###  slave elasticsearch.yml配置
 
-> slave跟master的配置基本一致主要是`node.master: false`其他都一样,这里就不写了,你可以去看我[github](https://github.com/zhaoyunxing92/docker-case/tree/develop/elasticsearch)上的配置(elasticsearch/config/es2/elasticsearch.yml)
+> slave跟master的配置基本一致主要是`node.master: false`其他都一样,这里就不写了,你可以去看我[github](https://github.com/zhaoyunxing92/docker-case/tree/develop/elasticsearch)上的配置(elasticsearch/config/es/elasticsearch.yml)
 
 ### docker-compose启动
 
