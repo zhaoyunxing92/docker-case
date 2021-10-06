@@ -133,7 +133,7 @@ configmap/kube-flannel-cfg created
 daemonset.apps/kube-flannel-ds created
 ```
 
-#### 4.验证结果
+##### 4.验证结果
 
 > 先获取pods然后查看一个pod的日志即可
 
@@ -231,6 +231,13 @@ W0709 10:43:06.551816       1 server_others.go:512] detect-local-mode set to Clu
 
 ```shell
 kubeadm token create --print-join-command
+```
+
+### Kubectl 自动补全
+
+```shell
+source <(kubectl completion bash) # 在 bash 中设置当前 shell 的自动补全，要先安装 bash-completion 包。
+echo "source <(kubectl completion bash)" >> ~/.bashrc # 在您的 bash shell 中永久的添加自动补全
 ```
 
 ## 可能遇到的问题

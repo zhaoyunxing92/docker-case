@@ -7,19 +7,14 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   # 设置虚拟机的Box
-  config.vm.box = "zhaoyunxing/centos-k8s"
-  config.vm.box_version = "0.0.1"
-  # 设置root用户
-  config.ssh.username = "vagrant" 
-  config.ssh.password = "vagrant"
-  # file sync disabled
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.box = "centos/7"
+  config.vm.box_version = "2004.01"
+
+  config.vm.provision "shell", path:"script/docker_init.sh"
   # master
   config.vm.define "k8s-master" do |master|
     # set hostname
     master.vm.hostname="k8s-master"
-    # master init
-    master.vm.provision "shell", path:"script/node_init.sh"
     # set port
     master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
     # set network
@@ -43,8 +38,6 @@ Vagrant.configure("2") do |config|
            node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
            # 设置虚拟机的IP
            node.vm.network "private_network", ip: "192.168.56.#{200+i}", netmask: "255.255.255.0"
-           # node init
-           node.vm.provision "shell", path:"script/node_init.sh"
            # VirtaulBox相关配置
            node.vm.provider "virtualbox" do |vb|
                # 设置虚拟机的名称

@@ -8,10 +8,10 @@
 #     --pod-network-cidr=10.244.0.0/16
 
 # hosts设置
-sudo sh -c "echo -e '
-192.168.56.200 k8s-master
-192.168.56.201 k8s-node1
-192.168.56.202 k8s-node2' >> /etc/hosts"
+# sudo sh -c "echo -e '
+# 192.168.56.200 k8s-master
+# 192.168.56.201 k8s-node1
+# 192.168.56.202 k8s-node2' >> /etc/hosts"
 
 # sudo sh -c "echo 'export KUBECONFIG=/etc/kubernetes/admin.conf' >> /etc/profile"
 # source /etc/profile
