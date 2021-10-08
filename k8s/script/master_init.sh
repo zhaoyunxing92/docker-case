@@ -2,8 +2,8 @@
 # author:zhaoyunxing
 
 # init master
-if ! type kubeadm >/dev/null 2>&1; then
-echo "======== start init master ==========="
+if [ -d ".kube"]; then
+echo "======== start kubeadm init ==========="
 
 sudo kubeadm init \
     --apiserver-advertise-address=192.168.56.200 \
