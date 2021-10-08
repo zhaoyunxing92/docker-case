@@ -2,7 +2,7 @@
 # author:zhaoyunxing
 
 # init master
-if [ -d ".kube"]; then
+if [ !  -d ".kube" ]; then
 echo "======== start kubeadm init ==========="
 
 sudo kubeadm init \
