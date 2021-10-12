@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
                # 设置虚拟机的名称
                vb.name = "k8s-node#{i}"
                # 设置虚拟机的内存大小
-               vb.memory = 4096
+               vb.memory = 8192
                # 设置虚拟机的CPU个数
                vb.cpus = 2
            end
