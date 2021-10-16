@@ -15,8 +15,6 @@ if ! type docker >/dev/null 2>&1; then
     sudo usermod -aG docker $USER &&  newgrp docker
     # 设置docker开机启动
     sudo systemctl enable docker
-    # 设置kubelet开机启动
-    systemctl enable kubelet
     # 设置国内镜像可以使用阿里云
     sudo sh -c "echo -e '{\n  \"registry-mirrors\":[\"https://75lag9v5.mirror.aliyuncs.com\"],\n  \"exec-opts\":[\"native.cgroupdriver=systemd\"]\n}' > /etc/docker/daemon.json"
     # 重新加载配置
