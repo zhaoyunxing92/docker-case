@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "centos/7"
+  config.vm.box_version = "2004.01"
+  config.vm.hostname="docker"
+  config.vm.define "docker"
+  
+  config.vm.provision "shell", path:"script/docker_init.sh"
+  config.vm.network "private_network", ip: "192.168.56.100", netmask: "255.255.255.0"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "docker"
+    vb.memory = "1024"
+  end
+end

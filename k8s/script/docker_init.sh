@@ -6,7 +6,7 @@ if ! type docker >/dev/null 2>&1; then
     # 安装更新驱动包
     sudo yum install -y yum-utils device-mapper-persistent-data lvm2
     # 设置repo
-    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     # 安装docker
     sudo yum install -y docker-ce docker-ce-cli containerd.io
     # 启动docker
@@ -15,8 +15,6 @@ if ! type docker >/dev/null 2>&1; then
     sudo usermod -aG docker $USER &&  newgrp docker
     # 设置docker开机启动
     sudo systemctl enable docker
-    # 设置kubelet开机启动
-    systemctl enable kubelet
     # 设置国内镜像可以使用阿里云
     sudo sh -c "echo -e '{\n  \"registry-mirrors\":[\"https://75lag9v5.mirror.aliyuncs.com\"],\n  \"exec-opts\":[\"native.cgroupdriver=systemd\"]\n}' > /etc/docker/daemon.json"
     # 重新加载配置
