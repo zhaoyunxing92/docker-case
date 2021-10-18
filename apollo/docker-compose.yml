@@ -12,11 +12,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: '123456' # root用户密码
     volumes:
-      - './init.sql:/docker-entrypoint-initdb.d' # 初始化sql
-  # apollo
-  apollo:
+      - './sql:/docker-entrypoint-initdb.d' # 初始化sql
+  # configservice
+  configservice:
     image: apolloconfig/apollo-configservice:1.9.1
-    container_name: apollo
+    container_name: apollo-configservice
     networks:
       - apollo
     ports:
@@ -27,7 +27,35 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
     depends_on:
       - mysql
-
+  # adminservice
+  adminservice:
+    image: apolloconfig/apollo-adminservice:1.9.1
+    container_name: apollo-adminservice
+    networks:
+      - apollo
+    ports:
+      - 8090:8090
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ApolloConfigDB?characterEncoding=utf8
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+    depends_on:
+      - mysql
+  # portal
+  portal:
+    image: apolloconfig/apollo-portal:1.9.1
+    container_name: apollo-portal
+    networks:
+      - apollo
+    ports:
+      - 8070:8070
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ApolloPortalDB?characterEncoding=utf8
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+    depends_on:
+      - mysql
+# network
 networks:
   apollo:
     name: apollo

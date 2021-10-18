@@ -13,4 +13,4 @@ services:
     # volumes:
       #- /data/mysql/data:/var/lib/mysql
       #- ./mysql.cnf:/etc/my.cnf # 把当前的mysql.conf挂载到容器中
-     # - './init.sql:/docker-entrypoint-initdb.d' # 初始化sql
+     # - './sql:/docker-entrypoint-initdb.d' # 初始化sql
