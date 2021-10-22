@@ -41,6 +41,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
     depends_on:
       - mysql
+      - configservice
   # portal
   portal:
     image: apolloconfig/apollo-portal:1.9.1
@@ -55,6 +56,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
     depends_on:
       - mysql
+      - adminservice
 # network
 networks:
   apollo:
