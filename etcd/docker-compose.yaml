@@ -2,7 +2,7 @@ version: "3.5"
 services:
   etcd:
     image: bitnami/etcd:3.5.2
-    privileged: true
+    container_name: etcd # docker启动后的名称
     # volumes:
     #   - "/etcd/data:/opt/bitnami/etcd/data"
     environment:
