@@ -23,9 +23,9 @@ if ! type docker >/dev/null 2>&1; then
     sudo systemctl restart docker
     # hosts设置
     sudo sh -c "echo -e '
-    192.168.56.200 k8s-master
-    192.168.56.201 k8s-node1
-    192.168.56.202 k8s-node2' >> /etc/hosts"
+    192.168.56.200 master
+    192.168.56.201 node1
+    192.168.56.202 node2' >> /etc/hosts"
 fi
 
 # install k8s
@@ -38,7 +38,7 @@ name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
 enabled=1
 gpgcheck=1
-repo_gpgcheck=1
+repo_gpgcheck=0
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF' && \
 sudo setenforce 0 && \

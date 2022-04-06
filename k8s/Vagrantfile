@@ -12,9 +12,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", path:"script/docker_init.sh"
   # master
-  config.vm.define "k8s-master" do |master|
+  config.vm.define "master" do |master|
     # set hostname
-    master.vm.hostname="k8s-master"
+    master.vm.hostname="master"
     # set port
     master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
 
@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
     master.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
       # 设置virtualbox显示名称
-      vb.name = "k8s-master"
+      vb.name = "master"
       # 设置cpu
       vb.cpus=2
     end
@@ -33,9 +33,9 @@ Vagrant.configure("2") do |config|
   
   # node
   (1..2).each do |i|
-       config.vm.define "k8s-node#{i}" do |node|
+       config.vm.define "node#{i}" do |node|
            # 设置虚拟机的主机名
-           node.vm.hostname="k8s-node#{i}"
+           node.vm.hostname="node#{i}"
            # set ssh port
            node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
            # 设置虚拟机的IP
@@ -43,9 +43,9 @@ Vagrant.configure("2") do |config|
            # VirtaulBox相关配置
            node.vm.provider "virtualbox" do |vb|
                # 设置虚拟机的名称
-               vb.name = "k8s-node#{i}"
+               vb.name = "node#{i}"
                # 设置虚拟机的内存大小
-               vb.memory = 8192
+               vb.memory = 4096
                # 设置虚拟机的CPU个数
                vb.cpus = 2
            end
