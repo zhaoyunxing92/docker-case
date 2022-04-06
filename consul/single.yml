@@ -1,6 +1,6 @@
-version: '3.1'
+version: '3.5'
 services:
-  nacos:
+  consul:
     image: consul:1.9.5
     container_name: consul
     ports:
