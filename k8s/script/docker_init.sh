@@ -8,11 +8,10 @@ if ! type docker >/dev/null 2>&1; then
     # 设置repo
     sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     # 安装docker
-    sudo yum install -y docker-ce docker-ce-cli containerd.io
+    sudo yum update && sudo yum install -y docker-ce
     # 启动docker
     sudo systemctl start docker
     # 当前用户添加到docker用户组，更新用户组
-    sudo usermod -aG docker $USER &&  newgrp docker
     # 设置docker开机启动
     sudo systemctl enable docker
     # 设置国内镜像可以使用阿里云
@@ -29,9 +28,10 @@ if ! type docker >/dev/null 2>&1; then
 fi
 
 # install k8s
-if ! type kubeadm >/dev/null 2>&1; then
-echo "======== start install kubeadm ==========="
+if ! type kubelet >/dev/null 2>&1; then
+echo "======== start k8s config ====== ====="
 
+# 设置阿里云源
 sudo bash -c 'cat << EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -40,26 +40,38 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=0
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF' && \
-sudo setenforce 0 && \
-sudo yum install -y kubelet kubeadm kubectl && \
-sudo systemctl enable kubelet && sudo systemctl start kubelet && \
-# 永久关闭swap
-sudo sed -i 's/.*swap.*/#&/' /etc/fstab
+EOF'
 
 # 允许 iptables 检查桥接流量
 sudo bash -c 'cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF' && \
-sudo bash -c 'cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+sudo bash -c 'cat <<EOF | sudo tee /etc/sysctl.d/kubernetes.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
+
+net.ipv4.ip_forward=1
+net.ipv4.tcp_tw_recycle=0
+
+vm.swappiness=0
+vm.overcommit_memory=1 # 不检查物理内存是否够用
+vm.panic_on_oom=0  # 开启oom
 EOF' && \
 sudo sysctl --system
 
+# 永久关闭swap
+sudo sed -i 's/.*swap.*/#&/' /etc/fstab
 # 关闭swap
-sudo bash -c "echo -e '
-vm.swappiness=0' >> /etc/sysctl.conf" && \
-sudo sysctl -p && \
-sudo swapoff -a && swapon -a
+sudo setenforce 0
+sudo bash -c "echo -e 'vm.swappiness=0' >> /etc/sysctl.conf" && \
+sudo swapoff -a && sed -i 's/^SELINUX=.*/selinux=disabled' /etc/selunux/config
+sudo sysctl -p
+
+# 时区
+sudo timedatectl set-timezone Asia/Shanghai
+sudo timedatectl set-local-rtc 0
+
+sudo systemctl restart rsyslog
+sudo systemctl restart crond
+
 fi

@@ -3,13 +3,16 @@
 
 # init master
 if [ ! -d ".kube" ]; then
-echo "======== start kubeadm init ==========="
+echo "======== master start kubeadm init ==========="
+sudo yum install -y kubelet kubeadm kubectl
+sudo systemctl enable kubelet && sudo systemctl start kubelet
+
 sudo kubeadm init \
     --apiserver-advertise-address=192.168.56.200 \
     --image-repository registry.aliyuncs.com/google_containers \
     --pod-network-cidr=10.244.0.0/16
 
-mkdir -p $HOME/.kube
+sudo mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
