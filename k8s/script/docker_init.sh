@@ -4,7 +4,7 @@
 if ! type docker >/dev/null 2>&1; then
     echo "========start install docker==========="
     # 安装更新驱动包
-    sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+    sudo yum install -y yum-utils device-mapper-persistent-data lvm2 ipvsadm
     # 设置repo
     sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     # 安装docker
@@ -76,16 +76,16 @@ sudo systemctl restart rsyslog
 sudo systemctl restart crond
 
 # 开启ipvs
-sudo bash -c "cat > /etc/sysconfig/modules/ipvs.modules <<EOF
-#!/bin/bash
-modprobe -- ip_vs
-modprobe -- ip_vs_rr
-modprobe -- ip_vs_wrr
-modprobe -- ip_vs_sh
-modprobe -- nf_conntrack_ipv4
-EOF"
+# sudo bash -c "cat > /etc/sysconfig/modules/ipvs.modules <<EOF
+# #!/bin/bash
+# modprobe -- ip_vs
+# modprobe -- ip_vs_rr
+# modprobe -- ip_vs_wrr
+# modprobe -- ip_vs_sh
+# modprobe -- nf_conntrack_ipv4
+# EOF"
 
-sudo chmod 755 /etc/sysconfig/modules/ipvs.modules && \
-bash /etc/sysconfig/modules/ipvs.modules && \
-lsmod |grep -e ip_vs -e nf_conntrack_ipv4
+# sudo chmod 755 /etc/sysconfig/modules/ipvs.modules && \
+# bash /etc/sysconfig/modules/ipvs.modules && \
+# lsmod |grep -e ip_vs -e nf_conntrack_ipv4
 fi
