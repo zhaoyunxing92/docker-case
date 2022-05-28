@@ -30,7 +30,7 @@ fi
 
 # install k8s
 if ! type kubelet >/dev/null 2>&1; then
-echo "======== start k8s config ====== ====="
+echo "======== start install k8s ====== ====="
 
 # 设置阿里云源
 sudo bash -c 'cat << EOF > /etc/yum.repos.d/kubernetes.repo
@@ -75,4 +75,17 @@ sudo timedatectl set-local-rtc 0
 sudo systemctl restart rsyslog
 sudo systemctl restart crond
 
+# 开启ipvs
+sudo bash -c "cat > /etc/sysconfig/modules/ipvs.modules <<EOF
+#!/bin/bash
+modprobe -- ip_vs
+modprobe -- ip_vs_rr
+modprobe -- ip_vs_wrr
+modprobe -- ip_vs_sh
+modprobe -- nf_conntrack_ipv4
+EOF"
+
+sudo chmod 755 /etc/sysconfig/modules/ipvs.modules && \
+bash /etc/sysconfig/modules/ipvs.modules && \
+lsmod |grep -e ip_vs -e nf_conntrack_ipv4
 fi
