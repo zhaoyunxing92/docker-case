@@ -4,7 +4,7 @@
 # init master
 if [ ! -d ".kube" ]; then
 echo "======== master start kubeadm init ==========="
-sudo yum install -y kubelet kubeadm kubectl
+sudo yum install -y kubelet kubeadm kubectl ipvsadm
 sudo systemctl enable kubelet && sudo systemctl start kubelet
 
 sudo kubeadm init \

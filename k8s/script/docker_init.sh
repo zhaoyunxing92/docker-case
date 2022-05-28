@@ -4,7 +4,7 @@
 if ! type docker >/dev/null 2>&1; then
     echo "========start install docker==========="
     # 安装更新驱动包
-    sudo yum install -y yum-utils device-mapper-persistent-data lvm2 ipvsadm
+    sudo yum install -y yum-utils device-mapper-persistent-data lvm2
     # 设置repo
     sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     # 安装docker
