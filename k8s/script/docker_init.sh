@@ -8,7 +8,7 @@ if ! type docker >/dev/null 2>&1; then
     # 设置repo
     sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     # 安装docker
-    sudo yum update && sudo yum install -y docker-ce
+    sudo yum -y update && sudo yum install -y docker-ce
     # 启动docker
     sudo systemctl start docker
     # 当前用户添加到docker用户组，更新用户组
