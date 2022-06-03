@@ -7,6 +7,11 @@ echo "======== master start kubeadm init ==========="
 sudo yum install -y kubelet kubeadm kubectl ipvsadm
 sudo systemctl enable kubelet && sudo systemctl start kubelet
 
+# fix unknown service runtime.v1alpha2.RuntimeService
+# https://github.com/containerd/containerd/issues/4581
+sudo rm /etc/containerd/config.toml
+sudo systemctl restart containerd
+
 sudo kubeadm init \
     --apiserver-advertise-address=192.168.56.200 \
     --image-repository registry.aliyuncs.com/google_containers \
