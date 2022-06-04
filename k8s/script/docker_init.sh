@@ -11,6 +11,8 @@ if ! type docker >/dev/null 2>&1; then
     sudo yum -y update && sudo yum install -y docker-ce
     # 启动docker
     sudo systemctl start docker
+    # 授权
+    sudo chmod 666 /var/run/docker.sock
     # 当前用户添加到docker用户组，更新用户组
     sudo usermod -aG docker $USER && newgrp docker
     # 设置docker开机启动
