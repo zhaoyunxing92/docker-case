@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  # 设置虚拟机的Box
+  config.vm.box = "centos/7"
+  config.vm.box_version = "2004.01"
+
+  config.vm.provision "shell", path:"script/containerd_init.sh"
+  # master
+  config.vm.define "master" do |master|
+    # set hostname
+    master.vm.hostname="master"
+    # set port
+    master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
+    # node init
+    master.vm.provision "shell", path:"script/master_init.sh"
+    # set network
+    master.vm.network "private_network", ip: "192.168.56.200", netmask: "255.255.255.0"
+    # set memory、cpu
+    master.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      # 设置virtualbox显示名称
+      vb.name = "master"
+      # 设置cpu
+      vb.cpus=2
+    end
+  end
+  
+  # node
+  (1..2).each do |i|
+       config.vm.define "node#{i}" do |node|
+           # 设置虚拟机的主机名
+           node.vm.hostname="node#{i}"
+           # set ssh port
+           node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
+           # node init
+           node.vm.provision "shell", path:"script/node_init.sh"
+           # 设置虚拟机的IP
+           node.vm.network "private_network", ip: "192.168.56.#{200+i}", netmask: "255.255.255.0"
+           # VirtaulBox相关配置
+           node.vm.provider "virtualbox" do |vb|
+               # 设置虚拟机的名称
+               vb.name = "node#{i}"
+               # 设置虚拟机的内存大小
+               vb.memory = 4096
+               # 设置虚拟机的CPU个数
+               vb.cpus = 2
+           end
+       end
+  end
+end
