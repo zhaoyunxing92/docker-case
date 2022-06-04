@@ -25,6 +25,7 @@ if ! type containerd >/dev/null 2>&1; then
     systemctl enable kubelet && systemctl start kubelet
     # 授权
     sudo chmod 666 /run/containerd/containerd.sock
+
     # hosts设置
     sudo sh -c "echo -e '
     192.168.56.200 master
@@ -82,17 +83,14 @@ sudo timedatectl set-local-rtc 0
 sudo systemctl restart rsyslog
 sudo systemctl restart crond
 
-# 开启ipvs
-# sudo bash -c "cat > /etc/sysconfig/modules/ipvs.modules <<EOF
-# #!/bin/bash
-# modprobe -- ip_vs
-# modprobe -- ip_vs_rr
-# modprobe -- ip_vs_wrr
-# modprobe -- ip_vs_sh
-# modprobe -- nf_conntrack_ipv4
-# EOF"
+# 设置crictl配置
+sudo bash -c 'cat << EOF > /etc/crictl.yaml
+runtime-endpoint: /run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 10
+debug: false
+pull-image-on-create: false
+disable-pull-on-run: false
+EOF'
 
-# sudo chmod 755 /etc/sysconfig/modules/ipvs.modules && \
-# bash /etc/sysconfig/modules/ipvs.modules && \
-# lsmod |grep -e ip_vs -e nf_conntrack_ipv4
 fi
