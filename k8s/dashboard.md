@@ -2,6 +2,8 @@
 
 > 最终dashboard通过`https://192168.56.200:30000访问
 
+> [1.24.x版本](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md) 看这里
+
 ## [github上的yaml文件](https://github.com/kubernetes/dashboard/blob/v2.3.1/aio/deploy/recommended.yaml)
 
 ```yaml
@@ -345,3 +347,15 @@ subjects:
  kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 ```
 
+### 1.24x版本生成token
+
+```shell
+kubectl -n kubernetes-dashboard create token admin-user
+```
+
+### Chrome拦截
+
+输入一下11个单词解决
+``` shell
+thisisunsafe
+```
