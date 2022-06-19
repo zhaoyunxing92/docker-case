@@ -21,8 +21,6 @@ if ! type containerd >/dev/null 2>&1; then
     sudo systemctl enable containerd
     # 重启containerd
     sudo systemctl restart containerd
-
-    systemctl enable kubelet && systemctl start kubelet
     # 授权
     sudo chmod 666 /run/containerd/containerd.sock
 
