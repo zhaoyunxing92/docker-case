@@ -7,6 +7,7 @@ services:
     # network_mode: host
     ports:
       - 8848:8848
+      - 9848:9848
     environment:
       - MODE=standalone #启动模式是独立模式
     #volumes:
