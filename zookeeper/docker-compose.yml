@@ -2,7 +2,7 @@ version: '3'
 
 services:
   zookeeper:
-    image: zookeeper:latest
+    image: zookeeper:3.8.0
     container_name: zookeeper
     ports:
       - 2181:2181
