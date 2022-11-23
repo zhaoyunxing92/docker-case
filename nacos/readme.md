@@ -10,7 +10,6 @@ services:
   nacos:
     image: nacos/nacos-server:latest
     container_name: nacos
-    network_mode: host
     ports:
       - 8848:8848
     environment:
