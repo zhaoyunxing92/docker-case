@@ -20,6 +20,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 source /etc/profile
 # 部署flannel网络
 kubectl apply -f /vagrant/config/kube-flannel.yml
+# kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+
 # # 文件授权
 # sudo sh -c "echo 'export KUBECONFIG=/etc/kubernetes/admin.conf' >> /etc/profile"
 # sudo chmod 666 /etc/kubernetes/admin.conf
