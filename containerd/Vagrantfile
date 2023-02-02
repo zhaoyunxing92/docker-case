@@ -15,12 +15,10 @@ Vagrant.configure("2") do |config|
   config.vm.define "master" do |master|
     # set hostname
     master.vm.hostname="master"
-    # set port
-    master.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
     # node init
     master.vm.provision "shell", path:"script/master_init.sh"
     # set network
-    master.vm.network "private_network", ip: "192.168.56.200", netmask: "255.255.255.0"
+    master.vm.network "private_network", ip: "192.168.56.200", netmask: "255.255.255.0", virtualbox__intnet: true 
     # set memory、cpu
     master.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
@@ -36,12 +34,10 @@ Vagrant.configure("2") do |config|
        config.vm.define "node#{i}" do |node|
            # 设置虚拟机的主机名
            node.vm.hostname="node#{i}"
-           # set ssh port
-           node.vm.network "forwarded_port", guest: 22, host:"#{2200+i}", id: "ssh"
            # node init
            node.vm.provision "shell", path:"script/node_init.sh"
            # 设置虚拟机的IP
-           node.vm.network "private_network", ip: "192.168.56.#{200+i}", netmask: "255.255.255.0"
+           node.vm.network "private_network", ip: "192.168.56.#{200+i}", netmask: "255.255.255.0", virtualbox__intnet: true
            # VirtaulBox相关配置
            node.vm.provider "virtualbox" do |vb|
                # 设置虚拟机的名称

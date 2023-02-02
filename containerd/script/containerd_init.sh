@@ -1,17 +1,18 @@
 #!/bin/bash
 # author:zhaoyunxing
-# 执行安装docker步骤
+# 执行安装containerd步骤
 if ! type containerd >/dev/null 2>&1; then
     echo "========start install containerd ==========="
     # 设置repo
     sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-    # 安装docker
+    # 安装containerd
     sudo yum -y update && sudo yum install -y containerd.io
     # 修改配置
     sudo mkdir -vp /etc/containerd
     sudo containerd config default | sudo tee /etc/containerd/config.toml
 
     sudo sed -i "s#k8s.gcr.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g"  /etc/containerd/config.toml
+    sudo sed -i "s#registry.k8s.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g"  /etc/containerd/config.toml
     sudo sed -i 's#SystemdCgroup = false#SystemdCgroup = true#g' /etc/containerd/config.toml
     sudo sed -i '/registry.mirrors/a\ \ \ \ \ \ \ \ \[plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]'  /etc/containerd/config.toml
     sudo sed -i '/registry.mirrors."docker.io"/a\ \ \ \ \ \ \ \ \  \endpoint=["https://75lag9v5.mirror.aliyuncs.com"]'  /etc/containerd/config.toml
