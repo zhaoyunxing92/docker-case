@@ -27,9 +27,9 @@ if ! type containerd >/dev/null 2>&1; then
 
     # hosts设置
     sudo sh -c "echo -e '
-    192.168.56.200 master
-    192.168.56.201 node1
-    192.168.56.202 node2' >> /etc/hosts"
+192.168.56.100 master
+192.168.56.101 node1
+192.168.56.102 node2' >> /etc/hosts"
 fi
 
 # install k8s
