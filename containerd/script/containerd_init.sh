@@ -11,8 +11,8 @@ if ! type containerd >/dev/null 2>&1; then
     sudo mkdir -vp /etc/containerd
     sudo containerd config default | sudo tee /etc/containerd/config.toml
 
-    sudo sed -i "s#k8s.gcr.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g"  /etc/containerd/config.toml
-    sudo sed -i "s#registry.k8s.io#registry.cn-hangzhou.aliyuncs.com/google_containers#g"  /etc/containerd/config.toml
+    sudo sed -i "s#k8s.gcr.io#registry.aliyuncs.com/google_containers#g"  /etc/containerd/config.toml
+    sudo sed -i "s#registry.k8s.io#registry.aliyuncs.com/google_containers#g"  /etc/containerd/config.toml
     sudo sed -i 's#SystemdCgroup = false#SystemdCgroup = true#g' /etc/containerd/config.toml
     sudo sed -i '/registry.mirrors/a\ \ \ \ \ \ \ \ \[plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]'  /etc/containerd/config.toml
     sudo sed -i '/registry.mirrors."docker.io"/a\ \ \ \ \ \ \ \ \  \endpoint=["https://75lag9v5.mirror.aliyuncs.com"]'  /etc/containerd/config.toml
