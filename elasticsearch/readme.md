@@ -4,10 +4,6 @@
 
 > 基于docker构建的代码地址:<https://github.com/zhaoyunxing92/docker-case/tree/develop/elasticsearch> 可以直接使用,我下面也是按照这个写的这个文档
 
-## 为什么从搭建开始
-
-在我的观念里`elasticsearch`是大数据的产物,所有很抵触只是作为边缘技术没有用心学过,但是上周五我的组员在它跟springboot整合的时候出现了问题.我就想在本地搭建一套集群还原他的问题,前后大概消耗了两天时间,于是我就想写出来以免后人再入我的坑,
-
 ## 单机版
 
 ### docker-compose.yml
