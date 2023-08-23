@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   elasticsearch:
-    image: elasticsearch:7.10.1
+    image: elastic/elasticsearch:${ELASTICSEARCH_VERSION}
     container_name: elasticsearch
     networks:
       - skywalking
@@ -16,15 +16,13 @@ services:
       start_period: 40s
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - TZ=Asia/Shanghai
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+
   oap:
-    image: apache/skywalking-oap-server:8.1.0-es7
+    image: apache/skywalking-oap-server:${SKYWALKING_VERISON}
     container_name: oap
     networks:
       - skywalking
@@ -40,12 +38,14 @@ services:
       start_period: 40s
     environment:
       TZ: Asia/Shanghai
-      SW_STORAGE: elasticsearch7
+      SW_STORAGE: elasticsearch
       SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+    volumes:
+      - ./config/application.yaml:/skywalking/config/application.yml
     depends_on:
       - elasticsearch
   ui:
-    image: apache/skywalking-ui:8.1.0
+    image: apache/skywalking-ui:${SKYWALKING_VERISON}
     container_name: ui
     networks:
       - skywalking
@@ -54,7 +54,7 @@ services:
       - "8080:8080"
     environment:
       TZ: Asia/Shanghai
-      SW_OAP_ADDRESS: oap:12800
+      SW_OAP_ADDRESS: http://oap:12800
     depends_on:
       - oap
 
