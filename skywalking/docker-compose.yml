@@ -30,6 +30,7 @@ services:
     ports:
       - "11800:11800"
       - "12800:12800"
+      - "5005:5005"
     healthcheck:
       test: ["CMD-SHELL", "/skywalking/bin/swctl"]
       interval: 30s
@@ -40,6 +41,7 @@ services:
       TZ: Asia/Shanghai
       SW_STORAGE: elasticsearch
       SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     volumes:
       - ./config/application.yaml:/skywalking/config/application.yml
     depends_on:
@@ -57,6 +59,20 @@ services:
       SW_OAP_ADDRESS: http://oap:12800
     depends_on:
       - oap
+    # kibana
+  kibana:
+    image: kibana:${ELASTICSEARCH_VERSION}
+    container_name: kibana
+    networks:
+      - skywalking
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    environment:
+      - elasticsearch.hosts=[ "http://elasticsearch:9200" ]
+      - i18n.locale=zh-CN
+      - elasticsearch.username=kibana
 
 networks:
   skywalking:
