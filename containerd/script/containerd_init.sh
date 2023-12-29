@@ -72,7 +72,8 @@ sudo sed -i 's/.*swap.*/#&/' /etc/fstab
 # 关闭swap
 sudo setenforce 0
 sudo bash -c "echo -e 'vm.swappiness=0' >> /etc/sysctl.conf" && \
-sudo swapoff -a && sed -i 's/^SELINUX=.*/selinux=disabled' /etc/selunux/config
+
+sudo swapoff -a && sed -ri 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 sudo sysctl -p
 
 # 时区
